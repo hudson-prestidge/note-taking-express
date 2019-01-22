@@ -4,12 +4,19 @@ module.exports = {
 
 
     development: {
-      client: 'postgresql',
+      client: 'pg',
       connection: {
         host: '127.0.0.1',
-        database: 'testdb',
+        database: 'postgres',
         user: 'postgres',
         password: 'test'
+      },
+      pool: {
+        min: 2,
+        max: 10
+      },
+      migrations: {
+        tableName: 'notes'
       }
   },
   staging: {
