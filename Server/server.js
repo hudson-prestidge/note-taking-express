@@ -8,9 +8,9 @@ var app = express()
 
 app.use('/api/v1/notes', notes)
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/../index.html')))
+app.use(express.static(path.join(__dirname,'/../public')))
+app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/../../public/index.html')))
 app.post('/', (req, res) => console.log('posted to index!'))
-app.use('/public', express.static(path.join(__dirname, '/../public')))
 
 //temporary
 
