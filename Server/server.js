@@ -10,7 +10,6 @@ app.use('/api/v1/notes', notes)
 
 app.use(express.static(path.join(__dirname,'/../public')))
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/../../public/index.html')))
-app.post('/', (req, res) => console.log('posted to index!'))
 
 //temporary
 

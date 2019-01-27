@@ -1,11 +1,14 @@
 var config = require('../../knexfile').development
 var knex = require('knex')(config)
 
-var getNotes = () => knex.select('id', 'content', 'time_posted').from('notes
+var getNotes = () => knex.select('id', 'content', 'time_posted').from('notes')
 
-var addNote = (content) => knex('notes').insert({content: content})
+var addNote = () => knex('notes').insert({content: ""})
+
+var getCount = () => knex('notes').count('id')
 
 module.exports = {
   getNotes,
-  addNote
+  addNote,
+  getCount
 }

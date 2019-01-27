@@ -8,4 +8,9 @@ router.get('/',(req, res) => {
   .catch(err => console.log(err))
 })
 
+router.post('/',(req, res) => {
+  db.addNote()
+  .catch(err => console.log(err))
+})
+
 module.exports = router
