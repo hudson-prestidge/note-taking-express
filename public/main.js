@@ -1,3 +1,15 @@
+var newButton = document.getElementById('new-button')
+var editButton = document.getElementById('edit-button')
+var deleteButton = document.getElementById('delete-button')
+
+var addNewNote = function() {
+  console.log('trying to add a note');
+  var postNote = new XMLHttpRequest()
+  postNote.open('POST', '/api/v1/notes')
+  window.location.reload(true)
+  postNote.send()
+}
+
 var clickNote = function() {
   if (document.getElementById('selected-note')) {
     document.getElementById('selected-note').removeAttribute('id')
@@ -5,11 +17,12 @@ var clickNote = function() {
   this.setAttribute('id', 'selected-note')
 }
 
-var request = new XMLHttpRequest();
 
-request.open('GET', '/api/v1/notes', true)
+var getNotes = new XMLHttpRequest();
 
-request.onload = function() {
+getNotes.open('GET', '/api/v1/notes', true)
+
+getNotes.onload = function() {
  var data = JSON.parse(this.response);
  var activeNotes = document.getElementsByClassName('active-notes')[0]
  var currentNote;
@@ -21,7 +34,6 @@ request.onload = function() {
  }
 }
 
+newButton.addEventListener('click', addNewNote)
 
-
-
-request.send();
+getNotes.send();
