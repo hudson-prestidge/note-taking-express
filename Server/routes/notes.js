@@ -8,14 +8,15 @@ router.get('/',(req, res) => {
   .catch(err => console.log(err))
 })
 
+
 router.post('/',(req, res) => {
   db.addNote()
   .catch(err => console.log(err))
 })
 
 router.put('/:id',(req, res) => {
-  console.log(req);
-  // db.editNote(id, )
+  db.editNote(req.params.id, req.body.newContent)
+  res.sendStatus(200)
 })
 
 module.exports = router

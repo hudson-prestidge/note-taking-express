@@ -16,18 +16,15 @@ var editNote = function() {
   if(currentNote.classList.contains('editing-note')) {
     var putNote = new XMLHttpRequest
     putNote.open('PUT', `/api/v1/notes/${noteId}`)
+    putNote.setRequestHeader("Content-Type", "application/json");
     currentNote.classList.remove('editing-note')
     currentNote.setAttribute("contenteditable", "false")
-    putNote.send(currentNote.childNodes[0].innerHTM)
+    putNote.send(JSON.stringify({"newContent": `${currentNote.childNodes[0].innerHTML}`}))
   }
   else {
     currentNote.classList.add('editing-note')
     currentNote.setAttribute("contenteditable", "true")
   }
-}
-
-var submitNote = function() {
-
 }
 
 var clickNote = function() {

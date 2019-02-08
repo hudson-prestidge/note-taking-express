@@ -7,8 +7,10 @@ var addNote = () => knex('notes').insert({content: ""})
 
 var getCount = () => knex('notes').count('id')
 
-var editNote = (id, content) => knex('notes').where('id', id).update({content: content})
-
+var editNote = (id, content) => knex('notes').where('id', id).update('content', content)
+// why is this line necessary for it to function?
+.then((data)=> {})
+//
 module.exports = {
   getNotes,
   addNote,
