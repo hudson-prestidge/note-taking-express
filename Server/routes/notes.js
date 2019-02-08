@@ -13,4 +13,9 @@ router.post('/',(req, res) => {
   .catch(err => console.log(err))
 })
 
+router.put('/:id',(req, res) => {
+  console.log(req);
+  // db.editNote(id, )
+})
+
 module.exports = router

@@ -1,8 +1,6 @@
 var newButton = document.getElementById('new-button')
-var editButton = document.getElementById('edit-button')
-var deleteButton = document.getElementById('delete-button')
 
-  // var noteId = noteToEdit.className.match(/note-id-(\d+)/i)[1]
+  //
 
 var addNewNote = function() {
   var postNote = new XMLHttpRequest()
@@ -12,10 +10,24 @@ var addNewNote = function() {
 }
 
 var editNote = function() {
-  var noteToEdit = document.getElementById('selected-note')
-  if (noteToEdit) {
-    noteToEdit.classList.toggle('editing-note')
+  var currentNote = this.parentElement
+  var noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
+
+  if(currentNote.classList.contains('editing-note')) {
+    var putNote = new XMLHttpRequest
+    putNote.open('PUT', `/api/v1/notes/${noteId}`)
+    currentNote.classList.remove('editing-note')
+    currentNote.setAttribute("contenteditable", "false")
+    putNote.send(currentNote.childNodes[0].innerHTM)
   }
+  else {
+    currentNote.classList.add('editing-note')
+    currentNote.setAttribute("contenteditable", "true")
+  }
+}
+
+var submitNote = function() {
+
 }
 
 var clickNote = function() {
@@ -47,12 +59,12 @@ getNotes.onload = function() {
    currentNote = activeNotes[i];
    var editButton = currentNote.appendChild(document.createElement("button"))
    editButton.classList.add('edit-button')
+   editButton.addEventListener('click', editNote)
    var deleteButton = currentNote.appendChild(document.createElement("button"))
    deleteButton.classList.add('delete-button')
  }
 }
 
-editButton.addEventListener('click', editNote)
 newButton.addEventListener('click', addNewNote)
 
 getNotes.send();

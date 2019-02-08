@@ -2,7 +2,7 @@ body {
   background-color: #999999;
 }
 
-#header {
+header {
   width: 100%;
   height: 10%;
   position: fixed;
@@ -74,15 +74,27 @@ p {
 .edit-button {
   position: absolute;
   bottom: 0.1em;
-  right: 0.1em;
+  right: 2.1em;
   width: 2em;
   height: 2em;
+}
+
+.edit-button:hover {
+  transform-origin: center;
+  transform: scale(1.1, 1.1);
+  opacity: 0.9;
 }
 
 .delete-button {
   position: absolute;
   bottom: 0.1em;
-  right: 2.1em;
+  right: 0.1em;
   width: 2em;
   height: 2em;
+}
+
+.delete-button:hover {
+  transform-origin: center;
+  transform: scale(1.1, 1.1);
+  opacity: 0.9;
 }
