@@ -1,5 +1,6 @@
 * {
   font-size: 17px;
+  box-sizing: border-box;
 }
 
 body {
@@ -55,14 +56,20 @@ header {
 }
 
 .note-section {
+  display: flex;
+  flex-direction: column;
   position: fixed;
-  top: 11%;
-  left: 26%;
+  height: 90%;
+  flex-wrap: wrap;
+  top: 10%;
+  left: 25%;
+  padding: 1%;
 }
 
 .active-note {
   position: relative;
-  margin-top: 1em;
+  width: 15vw;
+  margin: 1em 1em 0 0;
   padding: 1.5em 1.5em 2.5em 1.5em;
   border: 0.1em black solid;
   border-radius: 5px;

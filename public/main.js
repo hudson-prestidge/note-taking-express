@@ -28,12 +28,14 @@ var editNote = function() {
 }
 
 var deleteNote = function() {
+  if(confirm('Are you sure you want to delete this note?')){
   var currentNote = this.parentElement
   var noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
   var deleteNote = new XMLHttpRequest
   deleteNote.open('DELETE', `api/v1/notes/${noteId}`)
   deleteNote.send()
   currentNote.parentElement.removeChild(currentNote)
+  }
 }
 
 var clickNote = function() {

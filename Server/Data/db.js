@@ -12,7 +12,6 @@ var editNote = (id, content) => knex('notes')
                             .update('content', content)
                             .catch((err) => {console.log(err)})
 
-
 var deleteNote = (id) => knex('notes')
                       .where('id', id)
                       .del()
