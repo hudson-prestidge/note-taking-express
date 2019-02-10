@@ -27,6 +27,15 @@ var editNote = function() {
   }
 }
 
+var deleteNote = function() {
+  var currentNote = this.parentElement
+  var noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
+  var deleteNote = new XMLHttpRequest
+  deleteNote.open('DELETE', `api/v1/notes/${noteId}`)
+  deleteNote.send()
+  currentNote.parentElement.removeChild(currentNote)
+}
+
 var clickNote = function() {
   if (document.getElementById('selected-note')) {
     document.getElementById('selected-note').removeAttribute('id')
@@ -59,6 +68,7 @@ getNotes.onload = function() {
    editButton.addEventListener('click', editNote)
    var deleteButton = currentNote.appendChild(document.createElement("button"))
    deleteButton.classList.add('delete-button')
+   deleteButton.addEventListener('click', deleteNote)
  }
 }
 

@@ -8,7 +8,6 @@ router.get('/',(req, res) => {
   .catch(err => console.log(err))
 })
 
-
 router.post('/',(req, res) => {
   db.addNote()
   .catch(err => console.log(err))
@@ -16,6 +15,11 @@ router.post('/',(req, res) => {
 
 router.put('/:id',(req, res) => {
   db.editNote(req.params.id, req.body.newContent)
+  res.sendStatus(200)
+})
+
+router.delete('/:id', (req, res) => {
+  db.deleteNote(req.params.id)
   res.sendStatus(200)
 })
 

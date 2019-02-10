@@ -7,13 +7,21 @@ var addNote = () => knex('notes').insert({content: ""})
 
 var getCount = () => knex('notes').count('id')
 
-var editNote = (id, content) => knex('notes').where('id', id).update('content', content)
-// why is this line necessary for it to function?
-.then((data)=> {})
-//
+var editNote = (id, content) => knex('notes')
+                            .where('id', id)
+                            .update('content', content)
+                            .catch((err) => {console.log(err)})
+
+
+var deleteNote = (id) => knex('notes')
+                      .where('id', id)
+                      .del()
+                      .catch((err) => {console.log(err)})
+
 module.exports = {
   getNotes,
   addNote,
   getCount,
-  editNote
+  editNote,
+  deleteNote
 }
