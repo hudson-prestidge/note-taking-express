@@ -3,34 +3,34 @@ body {
 }
 
 header {
-  width: 100%;
+  width: 75%;
   height: 10%;
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 30%;
+  left: 25%;
   overflow-y: hidden;
   background-color: #777777;
 }
 
 .toolbar {
+  display: flex;
   position: absolute;
-  margin-left: 17%;
-  top: 20%;
-  width: 60%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   height: 100%;
 }
 
 .toolbar-button {
   margin-left: 2%;
-  width: 20%;
+  width: 15vw;
   height: 60%;
-  display: inline-block;
 }
 
 #sidebar {
   height: 100%;
-  width: 30%;
+  width: 25%;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -38,10 +38,13 @@ header {
   overflow-x: hidden;
   padding-top: 20px;
   background-color: #666666;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-nav-button {
-  margin-left: 20%;
   width: 60%;
   height: 20%;
   display: block;
@@ -50,7 +53,7 @@ header {
 .note-section {
   position: fixed;
   top: 11%;
-  left: 31%;
+  left: 26%;
 }
 
 .active-note {
@@ -68,7 +71,7 @@ p {
 }
 
 #selected-note {
-  background-color: blue;
+  border-color: yellow;
 }
 
 .edit-button {
