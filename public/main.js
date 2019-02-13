@@ -18,7 +18,6 @@ var editNote = function() {
     putNote.setRequestHeader("Content-Type", "application/json");
     currentNote.classList.remove('editing-note')
     currentNote.childNodes[0].setAttribute("contenteditable", "false")
-    console.log(`${currentNote.childNodes[0]}`);
     putNote.send(JSON.stringify({"newContent": `${currentNote.childNodes[0].innerHTML}`}))
   }
   else {

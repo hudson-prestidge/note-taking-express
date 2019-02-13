@@ -5,8 +5,8 @@ Current database schema is:
 
 'notes' table:
 {
-  id INT,
+  id SERIAL PRIMARY KEY,
   content STRING,
   time_posted DATETIME,
-  display_order INT
+  display_order SERIAL UNIQUE
 }

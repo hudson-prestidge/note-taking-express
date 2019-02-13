@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #999999;
+  background-color: hsl(0, 0%, 60%);
 }
 
 header {
@@ -87,6 +87,10 @@ p {
 
 #selected-note {
   border-color: yellow;
+}
+
+.editing-note > p {
+  background: hsl(0, 0%, 80%);
 }
 
 .edit-button {
