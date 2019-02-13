@@ -55,14 +55,19 @@ header {
   display: block;
 }
 
-.note-section {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  height: 90%;
-  flex-wrap: wrap;
+.container {
+  position: absolute;
   top: 10%;
   left: 25%;
+  height: 90%;
+  width: 75%;
+}
+
+.note-section {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: flex-start;
+  height: 90%;
   padding: 1%;
 }
 
@@ -110,4 +115,9 @@ p {
   transform-origin: center;
   transform: scale(1.1, 1.1);
   opacity: 0.9;
+}
+
+#new-button {
+  width: 2em;
+  height: 2em;
 }

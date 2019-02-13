@@ -1,6 +1,5 @@
 var newButton = document.getElementById('new-button')
 
-  //
 
 var addNewNote = function() {
   var postNote = new XMLHttpRequest()
