@@ -8,12 +8,12 @@ body {
 }
 
 header {
-  width: 75%;
+  width: 88%;
   height: 10%;
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 25%;
+  left: 12%;
   overflow-y: hidden;
   background-color: #777777;
 }
@@ -35,7 +35,7 @@ header {
 
 #sidebar {
   height: 100%;
-  width: 25%;
+  width: 12%;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -45,22 +45,31 @@ header {
   background-color: #666666;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
+#note-list {
+  position: absolute;
+  top: 10%;
+  left: 12%;
+  height: 90%;
+  width: 15%;
+  background-color: hsl(180, 60%, 60%)
+}
+
 .sidebar-nav-button {
-  width: 60%;
-  height: 20%;
+  width: 8em;
+  height: 8em;
   display: block;
 }
 
 .container {
   position: absolute;
   top: 10%;
-  left: 25%;
+  left: 27%;
   height: 90%;
-  width: 75%;
+  width: 73%;
 }
 
 .note-section {
