@@ -12,7 +12,8 @@
       <button class="sidebar-nav-button">trash</button>
     </div>
     <div id="note-list">
-      <p>sweet new note list</p>
+      <input type="text" placeholder="search notes">
+      <button id="new-button">New Note</button>
     </div>
     <header>
       <div class="toolbar">
@@ -20,9 +21,13 @@
       </div>
     </header>
     <div class="container">
-      <div class="note-section">
+      <div class="current-note-section">
+          <form class="current-note-contents">
+            <input type="text" class='current-note-title' placeholder='add title here'>
+            <textarea class='current-note-body' rows="8" cols="80" placeholder="add body here"></textarea>
+            <input type="submit" value='Update Note'>
+          </form>
       </div>
-      <button id="new-button">New Note</button>
     </div>
     <script src="main.js" charset="utf-8"></script>
   </body>

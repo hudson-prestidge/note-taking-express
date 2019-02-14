@@ -50,25 +50,15 @@ getNotes.open('GET', '/api/v1/notes', true)
 
 getNotes.onload = function() {
  var data = JSON.parse(this.response);
- var noteSection = document.getElementsByClassName('note-section')[0]
+ var noteList = document.getElementById('note-list')
  var currentNote;
  for(var i = 0; i < data.length; i++) {
-   currentNote = noteSection.appendChild(document.createElement("div"))
+   currentNote = noteList.appendChild(document.createElement("div"))
    currentNote.classList.add('active-note')
    currentNote.classList.add(`note-id-${data[i].id}`)
    currentNote.addEventListener('click', clickNote)
    var content = currentNote.appendChild(document.createElement("p"))
    content.innerHTML = data[i].content
- }
- var activeNotes = document.getElementsByClassName('active-note')
- for(var i = 0; i < activeNotes.length; i++) {
-   currentNote = activeNotes[i];
-   var editButton = currentNote.appendChild(document.createElement("button"))
-   editButton.classList.add('edit-button')
-   editButton.addEventListener('click', editNote)
-   var deleteButton = currentNote.appendChild(document.createElement("button"))
-   deleteButton.classList.add('delete-button')
-   deleteButton.addEventListener('click', deleteNote)
  }
 }
 

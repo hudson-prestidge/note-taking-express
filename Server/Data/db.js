@@ -3,6 +3,11 @@ var knex = require('knex')(config)
 
 var getNotes = () => knex.select('id', 'content', 'time_posted', 'display_order').from('notes').orderBy('display_order')
 
+var getNote = (id) => knex('notes')
+                      .where('id', id)
+                      .select('id', 'content', 'time_posted', 'display_order')
+                      .catch((err) => {console.log(err)})
+
 var addNote = () => knex('notes').insert({content: ""})
 
 var getCount = () => knex('notes').count('id')
@@ -15,7 +20,6 @@ var editNote = (id, content) => knex('notes')
 var deleteNote = (id) => knex('notes')
                       .where('id', id)
                       .del()
-                      .catch((err) => {console.log(err)})
 
 module.exports = {
   getNotes,

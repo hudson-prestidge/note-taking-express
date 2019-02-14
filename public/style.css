@@ -51,11 +51,21 @@ header {
 
 #note-list {
   position: absolute;
+  overflow: auto;
   top: 10%;
-  left: 12%;
   height: 90%;
+  left: 12%;
   width: 15%;
+  display: flex;
+  flex-direction: column;
   background-color: hsl(180, 60%, 60%)
+}
+
+.active-note {
+  padding: 1.5em 1.5em 2.5em 1.5em;
+  border-bottom: 0.1em black solid;
+  border-top: 0.1em black solid;
+  border-radius: 5px;
 }
 
 .sidebar-nav-button {
@@ -72,22 +82,14 @@ header {
   width: 73%;
 }
 
-.note-section {
-  display: flex;
-  flex-flow: column wrap;
-  align-content: flex-start;
+.current-note-section {
   height: 90%;
-  padding-left: 2%;
+  background: red;
 }
 
-.active-note {
-  position: relative;
-  width: 15vw;
-  margin: 1em 1em 0 0;
-  padding: 1.5em 1.5em 2.5em 1.5em;
-  border: 0.1em black solid;
-  border-radius: 5px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+.current-note-contents {
+  display: flex;
+  flex-direction: column;
 }
 
 p {

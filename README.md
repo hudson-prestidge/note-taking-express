@@ -8,5 +8,12 @@ Current database schema is:
   id SERIAL PRIMARY KEY,
   content STRING,
   time_posted DATETIME,
-  display_order SERIAL UNIQUE
+  display_order SERIAL UNIQUE,
 }
+
+planning to add:
+
+header STRING,
+time_last_modified DATETIME,
+archived BIT NOT NULL,
+trash BIT NOT NULL
