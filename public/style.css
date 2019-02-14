@@ -68,7 +68,7 @@ header {
   flex-flow: column wrap;
   align-content: flex-start;
   height: 90%;
-  padding: 1%;
+  padding-left: 2%;
 }
 
 .active-note {
@@ -122,6 +122,4 @@ p {
 }
 
 #new-button {
-  width: 2em;
-  height: 2em;
 }

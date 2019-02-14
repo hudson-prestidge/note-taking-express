@@ -1,6 +1,5 @@
 var newButton = document.getElementById('new-button')
 
-
 var addNewNote = function() {
   var postNote = new XMLHttpRequest()
   postNote.open('POST', '/api/v1/notes')
@@ -44,7 +43,6 @@ var clickNote = function() {
   }
   this.setAttribute('id', 'selected-note')
 }
-
 
 var getNotes = new XMLHttpRequest();
 
