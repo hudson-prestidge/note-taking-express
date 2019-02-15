@@ -8,6 +8,12 @@ router.get('/',(req, res) => {
   .catch(err => console.log(err))
 })
 
+router.get('/:id',(req, res) => {
+  db.getNote(req.params.id)
+  .then(note => res.send(note))
+  .catch(err => console.log(err))
+})
+
 router.post('/',(req, res) => {
   db.addNote()
   .catch(err => console.log(err))

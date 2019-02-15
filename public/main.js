@@ -10,7 +10,6 @@ var addNewNote = function() {
 var editNote = function() {
   var currentNote = this.parentElement
   var noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
-
   if(currentNote.classList.contains('editing-note')) {
     var putNote = new XMLHttpRequest
     putNote.open('PUT', `/api/v1/notes/${noteId}`)
@@ -41,6 +40,18 @@ var clickNote = function() {
   if (document.getElementById('selected-note')) {
     document.getElementById('selected-note').removeAttribute('id')
   }
+  var getNote = new XMLHttpRequest();
+  var noteId = this.className.match(/note-id-(\d+)/i)[1]
+  getNote.open('GET', `/api/v1/notes/${noteId}`, true)
+  getNote.onload = function() {
+    var data = JSON.parse(this.response)
+    var headerField = document.getElementsByClassName('current-note-header')[0]
+    //header field unused until database changed, but stored here for future use
+    var bodyField = document.getElementsByClassName('current-note-body')[0]
+    bodyField.innerHTML = data[0].content;
+  }
+
+  getNote.send();
   this.setAttribute('id', 'selected-note')
 }
 

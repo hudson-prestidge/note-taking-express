@@ -23,6 +23,7 @@ var deleteNote = (id) => knex('notes')
 
 module.exports = {
   getNotes,
+  getNote,
   addNote,
   getCount,
   editNote,
