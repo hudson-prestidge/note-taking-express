@@ -3,7 +3,15 @@ var newButton = document.getElementById('new-button')
 var addNewNote = function() {
   var postNote = new XMLHttpRequest()
   postNote.open('POST', '/api/v1/notes')
-  window.location.reload()
+  postNote.onload = function() {
+    let id = (JSON.parse(this.response))[0]
+    let currentNote = document.getElementById('note-list')
+              .appendChild(document.createElement("div"))
+    currentNote.classList.add('active-note')
+    currentNote.classList.add(`note-id-${id}`)
+    currentNote.addEventListener('click', clickNote)
+    var content = currentNote.appendChild(document.createElement("p"))
+  }
   postNote.send()
 }
 

@@ -16,6 +16,7 @@ router.get('/:id',(req, res) => {
 
 router.post('/',(req, res) => {
   db.addNote()
+  .then(data => res.send(data))
   .catch(err => console.log(err))
 })
 

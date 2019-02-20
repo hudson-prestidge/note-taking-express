@@ -8,7 +8,7 @@ var getNote = (id) => knex('notes')
                       .select('id', 'content', 'time_posted', 'display_order')
                       .catch((err) => {console.log(err)})
 
-var addNote = () => knex('notes').insert({content: ""})
+var addNote = () => knex('notes').insert({content: ""}).returning('id')
 
 var getCount = () => knex('notes').count('id')
 
