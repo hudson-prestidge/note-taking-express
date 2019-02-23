@@ -7,6 +7,11 @@ window.addEventListener('load', function() {
   deleteButton = document.getElementById('delete-button')
   newButton.addEventListener('click', addNewNote)
   deleteButton.addEventListener('click', deleteNote)
+  window.addEventListener('keyup', function(e){
+    if(e.keyCode == 46) {
+      deleteNote()
+    }
+  })
 })
 
 
