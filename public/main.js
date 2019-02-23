@@ -1,4 +1,14 @@
-var newButton = document.getElementById('new-button')
+
+var newButton;
+var deleteButton;
+
+window.addEventListener('load', function() {
+  newButton = document.getElementById('new-button')
+  deleteButton = document.getElementById('delete-button')
+  newButton.addEventListener('click', addNewNote)
+  deleteButton.addEventListener('click', deleteNote)
+})
+
 
 var addNewNote = function() {
   var postNote = new XMLHttpRequest()
@@ -34,13 +44,14 @@ var editNote = function() {
 }
 
 var deleteNote = function() {
-  if(confirm('Are you sure you want to delete this note?')){
-  var currentNote = this.parentElement
-  var noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
-  var deleteNote = new XMLHttpRequest
-  deleteNote.open('DELETE', `api/v1/notes/${noteId}`)
-  deleteNote.send()
-  currentNote.parentElement.removeChild(currentNote)
+  console.log(document.getElementById('selected-note'));
+  if(document.getElementById('selected-note')){
+    var currentNote = document.getElementById('selected-note')
+    var noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
+    var deleteNote = new XMLHttpRequest
+    deleteNote.open('DELETE', `api/v1/notes/${noteId}`)
+    deleteNote.send()
+    currentNote.parentElement.removeChild(currentNote)
   }
 }
 
@@ -81,6 +92,5 @@ getNotes.onload = function() {
  }
 }
 
-newButton.addEventListener('click', addNewNote)
 
 getNotes.send();

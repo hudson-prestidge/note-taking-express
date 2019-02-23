@@ -118,12 +118,12 @@ p {
   opacity: 0.9;
 }
 
-.delete-button {
-  position: absolute;
+#delete-button {
+  float: right;
   bottom: 0.1em;
   right: 0.1em;
-  width: 2em;
-  height: 2em;
+  width: 3em;
+  height: 3em;
 }
 
 .delete-button:hover {
