@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <!-- <meta charset="utf-8"> -->
     <title></title>
     <link rel="stylesheet" href="style.css">
   </head>
@@ -23,13 +25,12 @@
     <div class="container">
       <div class="current-note-section">
           <button id='delete-button'>Del</button>
-          <form class="current-note-contents">
-            <input type="text" class='current-note-header' placeholder='add header here'>
-            <textarea class='current-note-body' rows="8" cols="80" placeholder="add body here"></textarea>
-            <input type="submit" value='Update Note'>
-          </form>
+          <input type="text" class='current-note-header' placeholder='add header here'>
+          <input type ="text" class='current-note-body' placeholder="add body here" >
+          <button id="submit-note-changes-button">Update Note</button>
       </div>
     </div>
     <script src="main.js" charset="utf-8"></script>
   </body>
+  <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
 </html>

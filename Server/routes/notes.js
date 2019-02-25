@@ -20,9 +20,10 @@ router.post('/',(req, res) => {
   .catch(err => console.log(err))
 })
 
-router.put('/:id',(req, res) => {
+router.post('/:id',(req, res) => {
   db.editNote(req.params.id, req.body.newContent)
-  res.sendStatus(200)
+    .then(data => res.sendStatus(200))
+    .catch(err => console.log(err))
 })
 
 router.delete('/:id', (req, res) => {

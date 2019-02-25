@@ -87,7 +87,7 @@ header {
   background: red;
 }
 
-.current-note-contents {
+#edit-form {
   display: flex;
   flex-direction: column;
 }
