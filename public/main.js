@@ -42,11 +42,9 @@ let editNote = function() {
   let newContent = bodyField.value
   editNote.open('POST', `/api/v1/notes/${noteId}`)
   editNote.setRequestHeader("Content-Type", "application/json");
-
   editNote.onload = function() {
-    currentNote.childNodes[0].innerHTML = newContent;
+    currentNote.childNodes[0].innerHTML = newContent
   }
-
   editNote.send(JSON.stringify({"newContent": `${newContent}`}))
 }
 
