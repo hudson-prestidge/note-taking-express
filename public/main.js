@@ -17,7 +17,6 @@ window.addEventListener('load', function() {
   })
 })
 
-
 var addNewNote = function() {
   var createNote = new XMLHttpRequest()
   createNote.open('POST', '/api/v1/notes')
@@ -27,6 +26,12 @@ var addNewNote = function() {
               .appendChild(document.createElement("div"))
     currentNote.classList.add('active-note')
     currentNote.classList.add(`note-id-${id}`)
+    if (document.getElementById('selected-note')) {
+      document.getElementById('selected-note').removeAttribute('id')
+    }
+    currentNote.setAttribute('id', 'selected-note')
+    document.getElementsByClassName('current-note-title')[0].value = ""
+    document.getElementsByClassName('current-note-body')[0].value = ""
     currentNote.addEventListener('click', clickNote)
     var content = currentNote.appendChild(document.createElement("p"))
   }
@@ -75,9 +80,7 @@ let clickNote = function() {
     let bodyField = document.getElementsByClassName('current-note-body')[0]
     bodyField.value = data[0].content;
     titleField.value = data[0].title;
-  }
-
-  getNote.send();
+  }getNote.send();
   this.setAttribute('id', 'selected-note')
 }
 
@@ -98,6 +101,5 @@ getNotes.onload = function() {
    content.innerHTML = data[i].content
  }
 }
-
 
 getNotes.send();
