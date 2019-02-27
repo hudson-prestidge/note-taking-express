@@ -6,34 +6,33 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
      crossorigin="anonymous">
-    <!-- <meta charset="utf-8"> -->
-    <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta|Roboto" rel="stylesheet">
+    <title> Hudson's Note Taker Extraordinaire </title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="sidebar">
+    <aside>
       <button class="sidebar-nav-button">notes</button>
       <button class="sidebar-nav-button">archive</button>
       <button class="sidebar-nav-button">trash</button>
-    </div>
+    </aside>
     <div id="note-list">
       <input type="text" placeholder="search notes">
       <button id="new-button">New Note <i class="fa fa-pencil-alt"></i></button>
     </div>
     <header>
       <div class="toolbar">
-        <h1>My Notes</h1>
+        <h1>Hudson's Note Taker Extraordinaire</h1>
       </div>
       <button id='delete-button'>Del<i class="fa fa-trash"></i></button>
     </header>
     <div class="container">
       <div class="current-note-section">
-          <input type="text" class='current-note-header' placeholder='add header here'>
+          <input type="text" class='current-note-title' placeholder='add title here'>
           <textarea class='current-note-body' placeholder="add body here" ></textarea>
           <button id="submit-note-changes-button">Update Note</button>
       </div>
     </div>
     <script src="main.js" charset="utf-8"></script>
   </body>
-  <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
 </html>

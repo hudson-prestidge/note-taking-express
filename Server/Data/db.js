@@ -5,16 +5,19 @@ var getNotes = () => knex.select('id', 'content', 'time_posted', 'display_order'
 
 var getNote = (id) => knex('notes')
                       .where('id', id)
-                      .select('id', 'content', 'time_posted', 'display_order')
+                      .select('id', 'content', 'time_posted', 'display_order', 'title')
                       .catch((err) => {console.log(err)})
 
 var addNote = () => knex('notes').insert({content: ""}).returning('id')
 
 var getCount = () => knex('notes').count('id')
 
-var editNote = (id, content) => knex('notes')
+var editNote = (id, content, title) => knex('notes')
                             .where('id', id)
-                            .update('content', content)
+                            .update({
+                              content,
+                              title
+                            })
                             .catch((err) => {console.log(err)})
 
 var deleteNote = (id) => knex('notes')

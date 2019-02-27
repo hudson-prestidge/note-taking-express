@@ -37,15 +37,16 @@ let editNote = function() {
   let currentNote = document.getElementById('selected-note')
   let noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
   let editNote = new XMLHttpRequest
-  let headerField = document.getElementsByClassName('current-note-header')[0]
+  let titleField = document.getElementsByClassName('current-note-title')[0]
   let bodyField = document.getElementsByClassName('current-note-body')[0]
   let newContent = bodyField.value
+  let newTitle = titleField.value
   editNote.open('POST', `/api/v1/notes/${noteId}`)
   editNote.setRequestHeader("Content-Type", "application/json");
   editNote.onload = function() {
     currentNote.childNodes[0].innerHTML = newContent
   }
-  editNote.send(JSON.stringify({"newContent": `${newContent}`}))
+  editNote.send(JSON.stringify({"newContent": `${newContent}`,"newTitle": `${newTitle}`}))
 }
 
 let deleteNote = function() {
@@ -56,7 +57,7 @@ let deleteNote = function() {
     deleteNote.open('DELETE', `api/v1/notes/${noteId}`)
     deleteNote.send()
     currentNote.parentElement.removeChild(currentNote)
-    document.getElementsByClassName('current-note-header')[0].value = ""
+    document.getElementsByClassName('current-note-title')[0].value = ""
     document.getElementsByClassName('current-note-body')[0].value = ""
   }
 }
@@ -70,10 +71,10 @@ let clickNote = function() {
   getNote.open('GET', `/api/v1/notes/${noteId}`, true)
   getNote.onload = function() {
     let data = JSON.parse(this.response)
-    let headerField = document.getElementsByClassName('current-note-header')[0]
-    //header field unused until database changed, but stored here for future use
+    let titleField = document.getElementsByClassName('current-note-title')[0]
     let bodyField = document.getElementsByClassName('current-note-body')[0]
     bodyField.value = data[0].content;
+    titleField.value = data[0].title;
   }
 
   getNote.send();

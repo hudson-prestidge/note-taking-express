@@ -21,7 +21,7 @@ router.post('/',(req, res) => {
 })
 
 router.post('/:id',(req, res) => {
-  db.editNote(req.params.id, req.body.newContent)
+  db.editNote(req.params.id, req.body.newContent, req.body.newTitle)
     .then(data => res.sendStatus(200))
     .catch(err => console.log(err))
 })
