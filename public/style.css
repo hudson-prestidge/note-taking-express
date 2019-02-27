@@ -12,13 +12,15 @@ header {
   width: 88%;
   height: 10%;
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
   top: 0;
   left: 12%;
   overflow-y: hidden;
   background-color: #777777;
   border-bottom: 0.2em solid black;
-  text-align: center;
 }
 
 h1 {
@@ -127,8 +129,7 @@ p {
 
 #delete-button {
   position: absolute;
-  top: 0.2em;
-  right: 0.2em;
+  right: 1.5em;
   width: 3em;
   height: 3em;
 }
