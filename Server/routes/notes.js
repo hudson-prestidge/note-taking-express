@@ -28,7 +28,8 @@ router.post('/:id',(req, res) => {
 
 router.delete('/:id', (req, res) => {
   db.deleteNote(req.params.id)
-  res.sendStatus(200)
+    .then(data => res.sendStatus(200))
+    .catch(err => console.log(err))
 })
 
 module.exports = router
