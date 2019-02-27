@@ -80,7 +80,8 @@ let clickNote = function() {
     let bodyField = document.getElementsByClassName('current-note-body')[0]
     bodyField.value = data[0].content;
     titleField.value = data[0].title;
-  }getNote.send();
+  }
+  getNote.send();
   this.setAttribute('id', 'selected-note')
 }
 
