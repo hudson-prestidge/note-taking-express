@@ -1,6 +1,7 @@
 * {
   font-size: 17px;
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -8,77 +9,88 @@ body {
 }
 
 header {
-  width: 75%;
+  width: 88%;
   height: 10%;
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
   top: 0;
-  left: 25%;
+  left: 12%;
   overflow-y: hidden;
   background-color: #777777;
+  border-bottom: 0.2em solid black;
 }
 
-.toolbar {
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+h1 {
+  margin: 0.4em 0;
+  font-family: 'Mukta', sans-serif;
+  font-size: 1.5em;
+}
+
+button {
+  border-radius: 5px;
+}
+
+aside {
   height: 100%;
-}
-
-.toolbar-button {
-  margin-left: 2%;
-  width: 15vw;
-  height: 60%;
-}
-
-#sidebar {
-  height: 100%;
-  width: 25%;
+  width: 12%;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
   overflow-x: hidden;
   padding-top: 20px;
-  background-color: #666666;
+  background-color: hsl(0, 0, 50%);
+  border-right: 0.2em solid black;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
+#note-list {
+  position: absolute;
+  overflow: auto;
+  top: 10%;
+  height: 90%;
+  left: 12%;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  background-color: hsl(180, 60%, 60%)
+}
+
+.active-note {
+  padding: 1.5em 1.5em 2.5em 1.5em;
+  border-bottom: 0.1em black solid;
+  border-top: 0.1em black solid;
+  border-radius: 5px;
+}
+
 .sidebar-nav-button {
-  width: 60%;
-  height: 20%;
+  width: 8em;
+  height: 8em;
   display: block;
 }
 
 .container {
   position: absolute;
   top: 10%;
-  left: 25%;
+  left: 27%;
   height: 90%;
-  width: 75%;
+  width: 73%;
 }
 
-.note-section {
+.current-note-section {
+  height: 90%;
+  background: red;
+}
+
+#edit-form {
   display: flex;
-  flex-flow: column wrap;
-  align-content: flex-start;
-  height: 90%;
-  padding-left: 2%;
-}
-
-.active-note {
-  position: relative;
-  width: 15vw;
-  margin: 1em 1em 0 0;
-  padding: 1.5em 1.5em 2.5em 1.5em;
-  border: 0.1em black solid;
-  border-radius: 5px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  flex-direction: column;
 }
 
 p {
@@ -89,33 +101,40 @@ p {
   border-color: yellow;
 }
 
-.editing-note > p {
-  background: hsl(0, 0%, 80%);
+.current-note-title {
+  margin-top: 2%;
+  margin-left: 5%;
+  width: 90%;
 }
 
-.edit-button {
-  position: absolute;
-  bottom: 0.1em;
-  right: 2.1em;
-  width: 2em;
-  height: 2em;
+.current-note-body {
+  margin-top: 2%;
+  margin-left: 5%;
+  height: 40%;
+  width: 90%;
 }
 
-.edit-button:hover {
+#submit-note-changes-button {
+  margin-top: 2%;
+  margin-left: 40%;
+  width: 20%;
+  transform-origin: center;
+}
+
+#submit-note-changes-button:hover {
   transform-origin: center;
   transform: scale(1.1, 1.1);
   opacity: 0.9;
 }
 
-.delete-button {
+#delete-button {
   position: absolute;
-  bottom: 0.1em;
-  right: 0.1em;
-  width: 2em;
-  height: 2em;
+  right: 1.5em;
+  width: 3em;
+  height: 3em;
 }
 
-.delete-button:hover {
+#delete-button:hover {
   transform-origin: center;
   transform: scale(1.1, 1.1);
   opacity: 0.9;

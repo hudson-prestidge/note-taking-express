@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <title></title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+     crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Mukta|Roboto" rel="stylesheet">
+    <title> Hudson's Note Taker Extraordinaire </title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="sidebar">
+    <aside>
       <button class="sidebar-nav-button">notes</button>
       <button class="sidebar-nav-button">archive</button>
       <button class="sidebar-nav-button">trash</button>
+    </aside>
+    <div id="note-list">
+      <input type="text" placeholder="search notes">
+      <button id="new-button">New Note <i class="fa fa-pencil-alt"></i></button>
     </div>
     <header>
-      <div class="toolbar">
-        <h1>My Notes</h1>
-      </div>
+      <h1>Hudson's Note Taker Extraordinaire</h1>
+      <button id='delete-button'>Del<i class="fa fa-trash"></i></button>
     </header>
     <div class="container">
-      <div class="note-section">
+      <div class="current-note-section">
+          <input type="text" class='current-note-title' placeholder='add title here'>
+          <textarea class='current-note-body' placeholder="add body here" ></textarea>
+          <button id="submit-note-changes-button">Update Note</button>
       </div>
-      <button id="new-button">New Note</button>
     </div>
     <script src="main.js" charset="utf-8"></script>
   </body>
