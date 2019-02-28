@@ -17,12 +17,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
   top: 0;
   left: 12%;
-  overflow-y: hidden;
   background-color: rgb(155, 190, 199);
-  border-bottom: 0.2em solid black;
+  border-bottom: 0.15em solid black;
 }
 
 h1 {
@@ -44,7 +42,7 @@ aside {
   overflow-x: hidden;
   padding-top: 20px;
   background-color: rgb(155, 190, 199);
-  border-right: 0.2em solid black;
+  border-right: 0.15em solid black;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -60,7 +58,7 @@ aside {
   width: 15%;
   display: flex;
   flex-direction: column;
-  border-right: 0.2em solid black;
+  border-right: 0.15em solid black;
 }
 
 .active-note {
@@ -143,4 +141,8 @@ button:hover {
   transform: scale(1.1);
   -ms-transform: scale(1.1);
   -webkit-transform: scale(1.1);
+}
+
+.hidden {
+  display: none;
 }

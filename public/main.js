@@ -4,6 +4,7 @@ var deleteButton;
 var editButton;
 
 window.addEventListener('load', function() {
+  let data = [];
   newButton = document.getElementById('new-button')
   deleteButton = document.getElementById('delete-button')
   editButton = document.getElementById('submit-note-changes-button')
@@ -15,6 +16,44 @@ window.addEventListener('load', function() {
       deleteNote()
     }
   })
+  let getNotes = new XMLHttpRequest();
+  getNotes.open('GET', '/api/v1/notes', true)
+  getNotes.onload = function() {
+  data = JSON.parse(this.response);
+  let currentNote;
+  let noteList = document.getElementById('note-list')
+  for(let i = 0; i < data.length; i++) {
+    currentNote = noteList.appendChild(document.createElement("div"))
+    currentNote.classList.add('active-note')
+    currentNote.classList.add(`note-id-${data[i].id}`)
+    currentNote.addEventListener('click', clickNote)
+    let content = currentNote.appendChild(document.createElement("p"))
+    content.innerHTML = data[i].content
+    }
+    let searchBar = document.getElementById('search-bar')
+    let notes = document.getElementsByClassName('active-note')
+    let noteData = Array.from(notes)
+                    .map((note) => {
+                    return {
+                      content: note.childNodes[0].innerHTML,
+                      id: note.className.match(/note-id-(\d+)/i)[1]
+                    }
+                    })
+    searchBar.addEventListener('keyup', function(e){
+      let searchTerm = new RegExp(searchBar.value, "i")
+      let filteredNoteIds = noteData.filter((note) => {
+        return searchTerm.test(note.content)
+      }).map(note => note.id)
+      for(let j = 0; j < noteData.length; j++) {
+        if(filteredNoteIds.includes(noteData[j].id)){
+          notes[j].classList.remove('hidden')
+        }else {
+          notes[j].classList.add('hidden')
+        }
+      }
+    })
+  }
+  getNotes.send();
 })
 
 var addNewNote = function() {
@@ -84,23 +123,3 @@ let clickNote = function() {
   getNote.send();
   this.setAttribute('id', 'selected-note')
 }
-
-let getNotes = new XMLHttpRequest();
-
-getNotes.open('GET', '/api/v1/notes', true)
-
-getNotes.onload = function() {
- let data = JSON.parse(this.response);
- let noteList = document.getElementById('note-list')
- let currentNote;
- for(var i = 0; i < data.length; i++) {
-   currentNote = noteList.appendChild(document.createElement("div"))
-   currentNote.classList.add('active-note')
-   currentNote.classList.add(`note-id-${data[i].id}`)
-   currentNote.addEventListener('click', clickNote)
-   var content = currentNote.appendChild(document.createElement("p"))
-   content.innerHTML = data[i].content
- }
-}
-
-getNotes.send();
