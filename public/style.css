@@ -1,11 +1,13 @@
 * {
   font-size: 17px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
 
 body {
-  background-color: hsl(0, 0%, 60%);
+  background-color: rgb(226, 195, 145);
 }
 
 header {
@@ -19,14 +21,14 @@ header {
   top: 0;
   left: 12%;
   overflow-y: hidden;
-  background-color: #777777;
+  background-color: rgb(155, 190, 199);
   border-bottom: 0.2em solid black;
 }
 
 h1 {
   margin: 0.4em 0;
   font-family: 'Mukta', sans-serif;
-  font-size: 1.5em;
+  font-size: 1.7em;
 }
 
 button {
@@ -37,12 +39,11 @@ aside {
   height: 100%;
   width: 12%;
   position: fixed;
-  z-index: 1;
   top: 0;
   left: 0;
   overflow-x: hidden;
   padding-top: 20px;
-  background-color: hsl(0, 0, 50%);
+  background-color: rgb(155, 190, 199);
   border-right: 0.2em solid black;
   display: flex;
   flex-direction: column;
@@ -52,26 +53,31 @@ aside {
 
 #note-list {
   position: absolute;
-  overflow: auto;
+  overflow-y: auto;
   top: 10%;
   height: 90%;
   left: 12%;
   width: 15%;
   display: flex;
   flex-direction: column;
-  background-color: hsl(180, 60%, 60%)
+  border-right: 0.2em solid black;
 }
 
 .active-note {
+  background-color: rgb(168, 183, 171);
   padding: 1.5em 1.5em 2.5em 1.5em;
   border-bottom: 0.1em black solid;
   border-top: 0.1em black solid;
   border-radius: 5px;
 }
 
+.active-note:hover {
+}
+
 .sidebar-nav-button {
-  width: 8em;
-  height: 8em;
+  margin-bottom: 0.4em;
+  width: 6em;
+  height: 6em;
   display: block;
 }
 
@@ -84,8 +90,8 @@ aside {
 }
 
 .current-note-section {
-  height: 90%;
-  background: red;
+  height: 100%;
+  background-color: rgb(226, 195, 145);
 }
 
 #edit-form {
@@ -121,12 +127,6 @@ p {
   transform-origin: center;
 }
 
-#submit-note-changes-button:hover {
-  transform-origin: center;
-  transform: scale(1.1, 1.1);
-  opacity: 0.9;
-}
-
 #delete-button {
   position: absolute;
   right: 1.5em;
@@ -134,11 +134,13 @@ p {
   height: 3em;
 }
 
-#delete-button:hover {
-  transform-origin: center;
-  transform: scale(1.1, 1.1);
-  opacity: 0.9;
+#new-button {
+  margin: 0.2em 0;
 }
 
-#new-button {
+button:hover {
+  transform-origin: center;
+  transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
 }

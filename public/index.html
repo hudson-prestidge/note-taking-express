@@ -11,19 +11,19 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <header>
+      <h1>Hudson's Note Taker Extraordinaire</h1>
+      <button id='delete-button'>Del<i class="fa fa-trash"></i></button>
+    </header>
     <aside>
       <button class="sidebar-nav-button">notes</button>
       <button class="sidebar-nav-button">archive</button>
       <button class="sidebar-nav-button">trash</button>
     </aside>
     <div id="note-list">
-      <input type="text" placeholder="search notes">
+      <input type="text" placeholder="search notes" id="search-bar">
       <button id="new-button">New Note <i class="fa fa-pencil-alt"></i></button>
     </div>
-    <header>
-      <h1>Hudson's Note Taker Extraordinaire</h1>
-      <button id='delete-button'>Del<i class="fa fa-trash"></i></button>
-    </header>
     <div class="container">
       <div class="current-note-section">
           <input type="text" class='current-note-title' placeholder='add title here'>
