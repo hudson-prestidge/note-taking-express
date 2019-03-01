@@ -45,6 +45,7 @@ window.addEventListener('load', function() {
       let filteredNoteIds = noteData.filter((note) => {
         return searchTerm.test(note.content)
       }).map(note => note.id)
+      console.log(noteData, notes);
       for(let j = 0; j < noteData.length; j++) {
         if(filteredNoteIds.includes(noteData[j].id)){
           notes[j].classList.remove('hidden')
@@ -66,6 +67,7 @@ var addNewNote = function() {
     initNote(id)
   }
   createNote.send()
+  noteList.scrollTop = 0;
 }
 
 let initNote = function(id) {
@@ -81,7 +83,7 @@ let initNote = function(id) {
   document.getElementsByClassName('current-note-body')[0].value = ""
   let content = currentNote.appendChild(document.createElement("p"))
   currentNote.addEventListener('click', clickNote)
-  noteData.push({content: "", id: id})
+  noteData = [{content: "", id: id}, ...noteData]
 }
 
 let editNote = function() {
@@ -109,6 +111,11 @@ let deleteNote = function() {
   if(document.getElementById('selected-note')){
     let currentNote = document.getElementById('selected-note')
     let noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
+    for(let i = 0; i < noteData.length; i++) {
+      if (noteData[i].id == noteId) {
+        noteData.splice(i, 1)
+      }
+    }
     let deleteNote = new XMLHttpRequest
     deleteNote.open('DELETE', `api/v1/notes/${noteId}`)
     deleteNote.send()
