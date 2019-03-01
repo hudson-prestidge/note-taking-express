@@ -61,6 +61,18 @@ aside {
   100% {transform:scale(0)}
 }
 
+@keyframes growIn {
+  0% {transform:scale(0)}
+  70% {transform:scale(1)}
+  85% {transform: translateY(-4px);}
+  100% {transform: translateY(4px);}
+}
+
+@keyframes growOut {
+  0% {transform:scale(1)}
+  100% {transform:scale(0)}
+}
+
 
 #note-list {
   position: absolute;
@@ -76,6 +88,8 @@ aside {
 
 .active-note {
   transform-origin: center;
+  -webkit-animation: growIn 200ms;
+  -moz-animation: growIn 200ms;
   animation: growIn 200ms;
   background-color: rgb(168, 183, 171);
   padding: 1.5em 1.5em 2.5em 1.5em;

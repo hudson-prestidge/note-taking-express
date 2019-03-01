@@ -1,7 +1,8 @@
 
-var newButton;
-var deleteButton;
-var editButton;
+let newButton;
+let deleteButton;
+let editButton;
+let noteData = [];
 
 window.addEventListener('load', function() {
   let data = [];
@@ -19,20 +20,20 @@ window.addEventListener('load', function() {
   let getNotes = new XMLHttpRequest();
   getNotes.open('GET', '/api/v1/notes', true)
   getNotes.onload = function() {
-  data = JSON.parse(this.response);
-  let currentNote;
-  let noteList = document.getElementById('note-list')
-  for(let i = 0; i < data.length; i++) {
-    currentNote = noteList.appendChild(document.createElement("div"))
-    currentNote.classList.add('active-note')
-    currentNote.classList.add(`note-id-${data[i].id}`)
-    currentNote.addEventListener('click', clickNote)
-    let content = currentNote.appendChild(document.createElement("p"))
-    content.innerHTML = data[i].content
+    data = JSON.parse(this.response);
+    let currentNote;
+    let noteList = document.getElementById('note-list')
+    for(let i = 0; i < data.length; i++) {
+      currentNote = noteList.appendChild(document.createElement("div"))
+      currentNote.classList.add('active-note')
+      currentNote.classList.add(`note-id-${data[i].id}`)
+      currentNote.addEventListener('click', clickNote)
+      let content = currentNote.appendChild(document.createElement("p"))
+      content.innerHTML = data[i].content
     }
     let searchBar = document.getElementById('search-bar')
     let notes = document.getElementsByClassName('active-note')
-    let noteData = Array.from(notes)
+    noteData = Array.from(notes)
                     .map((note) => {
                     return {
                       content: note.childNodes[0].innerHTML,
@@ -73,6 +74,7 @@ var addNewNote = function() {
     document.getElementsByClassName('current-note-body')[0].value = ""
     currentNote.addEventListener('click', clickNote)
     var content = currentNote.appendChild(document.createElement("p"))
+    noteData.push({content: "", id: id})
   }
   createNote.send()
 }
@@ -89,6 +91,11 @@ let editNote = function() {
   editNote.setRequestHeader("Content-Type", "application/json");
   editNote.onload = function() {
     currentNote.childNodes[0].innerHTML = newContent
+    for(let i = 0; i < noteData.length; i++) {
+      if (noteData[i].id == noteId) {
+        noteData[i].content = newContent;
+      }
+    }
   }
   editNote.send(JSON.stringify({"newContent": `${newContent}`,"newTitle": `${newTitle}`}))
 }
@@ -102,13 +109,18 @@ let deleteNote = function() {
     deleteNote.send()
     deleteNote.onload= function () {
       currentNote.style.animation = 'growOut 140ms'
-      currentNote.addEventListener('animationend', function() {
-        currentNote.parentElement.removeChild(currentNote)
-        document.getElementsByClassName('current-note-title')[0].value = ""
-        document.getElementsByClassName('current-note-body')[0].value = ""
-      })
+      currentNote.style["-webkit-animation"] = 'growOut 140ms'
+      currentNote.style["-moz-animation"] = 'growOut 140ms'
+      currentNote.addEventListener('animationend', cleanUpNote)
+      currentNote.addEventListener('webkitAnimationEnd', cleanUpNote)
     }
   }
+}
+
+let cleanUpNote = function() {
+  this.parentElement.removeChild(this)
+  document.getElementsByClassName('current-note-title')[0].value = ""
+  document.getElementsByClassName('current-note-body')[0].value = ""
 }
 
 let clickNote = function() {
