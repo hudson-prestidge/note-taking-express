@@ -63,21 +63,25 @@ var addNewNote = function() {
   let noteList = document.getElementById('note-list')
   createNote.onload = function() {
     let id = (JSON.parse(this.response))[0]
-    let currentNote = noteList.appendChild(document.createElement("div"))
-    currentNote.classList.add('active-note')
-    currentNote.classList.add(`note-id-${id}`)
-    if (document.getElementById('selected-note')) {
-      document.getElementById('selected-note').removeAttribute('id')
-    }
-    currentNote.setAttribute('id', 'selected-note')
-    document.getElementsByClassName('current-note-title')[0].value = ""
-    document.getElementsByClassName('current-note-body')[0].value = ""
-    noteList.scrollTop = noteList.scrollHeight;
-    currentNote.addEventListener('click', clickNote)
-    var content = currentNote.appendChild(document.createElement("p"))
-    noteData.push({content: "", id: id})
+    initNote(id)
   }
   createNote.send()
+}
+
+let initNote = function(id) {
+  let noteList = document.getElementById('note-list')
+  let currentNote = noteList.insertBefore(document.createElement("div"), noteList.childNodes[0])
+  currentNote.classList.add('active-note')
+  currentNote.classList.add(`note-id-${id}`)
+  if (document.getElementById('selected-note')) {
+    document.getElementById('selected-note').removeAttribute('id')
+  }
+  currentNote.setAttribute('id', 'selected-note')
+  document.getElementsByClassName('current-note-title')[0].value = ""
+  document.getElementsByClassName('current-note-body')[0].value = ""
+  let content = currentNote.appendChild(document.createElement("p"))
+  currentNote.addEventListener('click', clickNote)
+  noteData.push({content: "", id: id})
 }
 
 let editNote = function() {
