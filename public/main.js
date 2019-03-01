@@ -60,10 +60,10 @@ window.addEventListener('load', function() {
 var addNewNote = function() {
   var createNote = new XMLHttpRequest()
   createNote.open('POST', '/api/v1/notes')
+  let noteList = document.getElementById('note-list')
   createNote.onload = function() {
     let id = (JSON.parse(this.response))[0]
-    let currentNote = document.getElementById('note-list')
-              .appendChild(document.createElement("div"))
+    let currentNote = noteList.appendChild(document.createElement("div"))
     currentNote.classList.add('active-note')
     currentNote.classList.add(`note-id-${id}`)
     if (document.getElementById('selected-note')) {
@@ -72,6 +72,7 @@ var addNewNote = function() {
     currentNote.setAttribute('id', 'selected-note')
     document.getElementsByClassName('current-note-title')[0].value = ""
     document.getElementsByClassName('current-note-body')[0].value = ""
+    noteList.scrollTop = noteList.scrollHeight;
     currentNote.addEventListener('click', clickNote)
     var content = currentNote.appendChild(document.createElement("p"))
     noteData.push({content: "", id: id})
