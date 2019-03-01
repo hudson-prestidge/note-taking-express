@@ -100,9 +100,14 @@ let deleteNote = function() {
     let deleteNote = new XMLHttpRequest
     deleteNote.open('DELETE', `api/v1/notes/${noteId}`)
     deleteNote.send()
-    currentNote.parentElement.removeChild(currentNote)
-    document.getElementsByClassName('current-note-title')[0].value = ""
-    document.getElementsByClassName('current-note-body')[0].value = ""
+    deleteNote.onload= function () {
+      currentNote.style.animation = 'growOut 140ms'
+      currentNote.addEventListener('animationend', function() {
+        currentNote.parentElement.removeChild(currentNote)
+        document.getElementsByClassName('current-note-title')[0].value = ""
+        document.getElementsByClassName('current-note-body')[0].value = ""
+      })
+    }
   }
 }
 
