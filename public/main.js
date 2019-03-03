@@ -68,16 +68,26 @@ window.addEventListener('load', function() {
   getNotes.send();
 })
 
-var addNewNote = function() {
+let addNewNote = function() {
   var createNote = new XMLHttpRequest()
   createNote.open('POST', '/api/v1/notes')
   let noteList = document.getElementById('note-list')
   createNote.onload = function() {
     let id = (JSON.parse(this.response))[0]
     initNote(id)
+    clearSearchFilter()
   }
   createNote.send()
   noteList.scrollTop = 0;
+}
+
+let clearSearchFilter = function() {
+  let searchBar = document.getElementById('search-bar')
+  let notes = document.getElementsByClassName('active-note')
+  searchBar.value = ""
+  for (let i = 0; i < notes.length; i++) {
+    notes[i].classList.remove('filtered')
+  }
 }
 
 let initNote = function(id) {
