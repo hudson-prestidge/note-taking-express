@@ -1,18 +1,18 @@
-var config = require('../../knexfile').development
-var knex = require('knex')(config)
+let config = require('../../knexfile').development
+let knex = require('knex')(config)
 
-var getNotes = () => knex.select('id', 'content', 'time_posted', 'display_order').from('notes').orderBy('display_order', 'desc')
+let getNotes = () => knex.select('id', 'content', 'display_order', 'title').from('notes').orderBy('display_order', 'desc')
 
-var getNote = (id) => knex('notes')
+let getNote = (id) => knex('notes')
                       .where('id', id)
-                      .select('id', 'content', 'time_posted', 'display_order', 'title')
+                      .select('id', 'content', 'display_order', 'title')
                       .catch((err) => {console.log(err)})
 
-var addNote = () => knex('notes').insert({content: ""}).returning('id')
+let addNote = () => knex('notes').insert({content: ""}).returning('id')
 
-var getCount = () => knex('notes').count('id')
+let getCount = () => knex('notes').count('id')
 
-var editNote = (id, content, title) => knex('notes')
+let editNote = (id, content, title) => knex('notes')
                             .where('id', id)
                             .update({
                               content,
@@ -20,7 +20,7 @@ var editNote = (id, content, title) => knex('notes')
                             })
                             .catch((err) => {console.log(err)})
 
-var deleteNote = (id) => knex('notes')
+let deleteNote = (id) => knex('notes')
                       .where('id', id)
                       .del()
 
