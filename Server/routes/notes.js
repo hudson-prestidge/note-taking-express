@@ -26,6 +26,12 @@ router.post('/:id',(req, res) => {
     .catch(err => console.log(err))
 })
 
+router.post('/archive/:id',(req, res) => {
+  db.archiveToggleNote(req.params.id, req.body.archived)
+    .then(data => res.sendStatus(200))
+    .catch(err => console.log(err))
+})
+
 router.delete('/:id', (req, res) => {
   db.deleteNote(req.params.id)
     .then(data => res.sendStatus(200))

@@ -8,11 +8,13 @@ window.addEventListener('load', function() {
   let data = [];
   newButton = document.getElementById('new-button')
   deleteButton = document.getElementById('delete-button')
+  archiveButton = document.getElementById('archive-button')
   editButton = document.getElementById('submit-note-changes-button')
   titleField = document.getElementsByClassName('current-note-title')[0]
   newButton.addEventListener('click', addNewNote)
   editButton.addEventListener('click', editNote)
   deleteButton.addEventListener('click', deleteNote)
+  archiveButton.addEventListener('click', archiveToggleNote)
   titleField.addEventListener('keyup', function(e) {
     if(e.keyCode == 13) {
         document.getElementsByClassName('current-note-body')[0].focus()
@@ -31,7 +33,11 @@ window.addEventListener('load', function() {
     let noteList = document.getElementById('note-list')
     for(let i = 0; i < data.length; i++) {
       currentNote = noteList.appendChild(document.createElement("div"))
-      currentNote.classList.add('active-note')
+      if (data[i].archived) {
+        currentNote.classList.add('note', 'archived-note')
+      } else {
+      currentNote.classList.add('note', 'active-note')
+      }
       currentNote.classList.add(`note-id-${data[i].id}`)
       currentNote.addEventListener('click', clickNote)
       let title = currentNote.appendChild(document.createElement("h2"))
@@ -42,7 +48,7 @@ window.addEventListener('load', function() {
       content.innerHTML = data[i].content
     }
     let searchBar = document.getElementById('search-bar')
-    let notes = document.getElementsByClassName('active-note')
+    let notes = document.getElementsByClassName('note')
     noteData = Array.from(notes)
                     .map((note) => {
                     return {
@@ -93,7 +99,7 @@ let clearSearchFilter = function() {
 let initNote = function(id) {
   let noteList = document.getElementById('note-list')
   let currentNote = noteList.insertBefore(document.createElement("div"), noteList.childNodes[0])
-  currentNote.classList.add('active-note')
+  currentNote.classList.add('note', 'active-note')
   currentNote.classList.add(`note-id-${id}`)
   selectNote(currentNote)
   document.getElementsByClassName('current-note-title')[0].value = ""
@@ -129,6 +135,21 @@ let editNote = function() {
       }
     }
     editNote.send(JSON.stringify({"newContent": `${newContent}`,"newTitle": `${newTitle}`}))
+  }
+}
+
+let archiveToggleNote = function() {
+  if(document.getElementById('selected-note')){
+    let currentNote = document.getElementById('selected-note')
+    let noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
+    let archived = currentNote.classList.contains('archived-note')
+    let archNote = new XMLHttpRequest
+    archNote.open('POST', `api/v1/notes/archive/${noteId}`)
+    archNote.send(JSON.stringify({"archived": `${archived}`}))
+    archNote.onload = function () {
+      currentNote.classList.toggle('active-note')
+      currentNote.classList.toggle('archived-note')
+    }
   }
 }
 

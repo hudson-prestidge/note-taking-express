@@ -9,12 +9,12 @@ Current database schema is:
   content TEXT,
   time_posted DATETIME,
   display_order SERIAL UNIQUE,
-  title TEXT
+  title TEXT,
+  archived BOOLEAN
 }
 
-planning to add:
 
-active-notes, archived-notes, trashed-notes tables to track note status
+planning to add:
 
 time_last_modified DATETIME
 

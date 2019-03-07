@@ -93,7 +93,7 @@ aside {
   border-left: 1px solid black;
 }
 
-.active-note {
+.note {
   transform-origin: center;
   -webkit-animation: growIn 200ms;
   -moz-animation: growIn 200ms;
@@ -103,6 +103,10 @@ aside {
   border-bottom: 0.1em black solid;
   border-top: 0.1em black solid;
   border-radius: 5px;
+}
+
+.active-note {
+  display: block;
 }
 
 .note-content {
@@ -215,7 +219,7 @@ button:hover {
   -webkit-transform: scale(1.05);
 }
 
-.hidden {
+.archived-note {
   display: none;
 }
 
