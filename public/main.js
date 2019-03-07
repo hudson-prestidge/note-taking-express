@@ -83,6 +83,7 @@ let archiveDisplay = function () {
   let archiveButton = document.getElementById('archive-button')
   let searchBar = document.getElementById('search-bar')
   searchBar.setAttribute('placeholder', 'search archive')
+  searchBar.value = ''
   archiveButton.innerHTML = 'Unarchive<i class="fa fa-archive"></i>'
   let activeNotes = document.getElementsByClassName('active-note')
   for(let i = 0; i < activeNotes.length; i++) {
@@ -99,6 +100,7 @@ let activeDisplay = function () {
   let archiveButton = document.getElementById('archive-button')
   let searchBar = document.getElementById('search-bar')
   searchBar.setAttribute('placeholder', 'search notes')
+  searchBar.value = ''
   archiveButton.innerHTML = 'Archive</br><i class="fa fa-archive"></i>'
   let activeNotes = document.getElementsByClassName('active-note')
   for(let i = 0; i < activeNotes.length; i++) {
