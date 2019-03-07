@@ -9,12 +9,16 @@ window.addEventListener('load', function() {
   newButton = document.getElementById('new-button')
   deleteButton = document.getElementById('delete-button')
   archiveButton = document.getElementById('archive-button')
+  viewActiveButton = document.getElementById('view-active-button')
+  viewArchiveButton = document.getElementById('view-archive-button')
   editButton = document.getElementById('submit-note-changes-button')
   titleField = document.getElementsByClassName('current-note-title')[0]
   newButton.addEventListener('click', addNewNote)
   editButton.addEventListener('click', editNote)
   deleteButton.addEventListener('click', deleteNote)
   archiveButton.addEventListener('click', archiveToggleNote)
+  viewArchiveButton.addEventListener('click', archiveDisplay)
+  viewActiveButton.addEventListener('click', activeDisplay)
   titleField.addEventListener('keyup', function(e) {
     if(e.keyCode == 13) {
         document.getElementsByClassName('current-note-body')[0].focus()
@@ -74,7 +78,40 @@ window.addEventListener('load', function() {
   getNotes.send();
 })
 
+let archiveDisplay = function () {
+  let viewArchiveButton = document.getElementById('view-archive-button')
+  let archiveButton = document.getElementById('archive-button')
+  let searchBar = document.getElementById('search-bar')
+  searchBar.setAttribute('placeholder', 'search archive')
+  archiveButton.innerHTML = 'Unarchive<i class="fa fa-archive"></i>'
+  let activeNotes = document.getElementsByClassName('active-note')
+  for(let i = 0; i < activeNotes.length; i++) {
+    activeNotes[i].style.display = 'none';
+  }
+  let archivedNotes = document.getElementsByClassName('archived-note')
+  for(let j = 0; j < archivedNotes.length; j++) {
+    archivedNotes[j].style.display = 'block';
+  }
+}
+
+let activeDisplay = function () {
+  let viewActiveButton = document.getElementById('view-active-button')
+  let archiveButton = document.getElementById('archive-button')
+  let searchBar = document.getElementById('search-bar')
+  searchBar.setAttribute('placeholder', 'search notes')
+  archiveButton.innerHTML = 'Archive</br><i class="fa fa-archive"></i>'
+  let activeNotes = document.getElementsByClassName('active-note')
+  for(let i = 0; i < activeNotes.length; i++) {
+    activeNotes[i].style.display = 'block';
+  }
+  let archivedNotes = document.getElementsByClassName('archived-note')
+  for(let j = 0; j < archivedNotes.length; j++) {
+    archivedNotes[j].style.display = 'none';
+  }
+}
+
 let addNewNote = function() {
+  activeDisplay()
   var createNote = new XMLHttpRequest()
   createNote.open('POST', '/api/v1/notes')
   let noteList = document.getElementById('note-list')
@@ -141,6 +178,7 @@ let editNote = function() {
 let archiveToggleNote = function() {
   if(document.getElementById('selected-note')){
     let currentNote = document.getElementById('selected-note')
+    currentNote.removeAttribute('id')
     let noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
     let archived = currentNote.classList.contains('archived-note')
     let archNote = new XMLHttpRequest
@@ -149,6 +187,9 @@ let archiveToggleNote = function() {
     archNote.onload = function () {
       currentNote.classList.toggle('active-note')
       currentNote.classList.toggle('archived-note')
+      currentNote.style.display = 'none'
+      document.getElementsByClassName('current-note-title')[0].value = ""
+      document.getElementsByClassName('current-note-body')[0].value = ""
     }
   }
 }
