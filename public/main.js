@@ -1,16 +1,13 @@
-
-let newButton;
-let deleteButton;
-let editButton;
 let noteData = [];
 
 window.addEventListener('load', function() {
   let data = [];
-  newButton = document.getElementById('new-button')
-  deleteButton = document.getElementById('delete-button')
-  archiveButton = document.getElementById('archive-button')
-  viewActiveButton = document.getElementById('view-active-button')
-  viewArchiveButton = document.getElementById('view-archive-button')
+  let newButton = document.getElementById('new-button')
+  let deleteButton = document.getElementById('delete-button')
+  let archiveButton = document.getElementById('archive-button')
+  let viewActiveButton = document.getElementById('view-active-button')
+  let viewArchiveButton = document.getElementById('view-archive-button')
+  let popup = document.getElementById('notification-popup')
   editButton = document.getElementById('submit-note-changes-button')
   titleField = document.getElementsByClassName('current-note-title')[0]
   newButton.addEventListener('click', addNewNote)
@@ -28,6 +25,9 @@ window.addEventListener('load', function() {
     if(e.keyCode == 46) {
       deleteNote()
     }
+  })
+  popup.addEventListener('animationend', (e) => {
+    popup.classList.remove('popping-up')
   })
   let getNotes = new XMLHttpRequest();
   getNotes.open('GET', '/api/v1/notes', true)
@@ -181,14 +181,25 @@ let archiveToggleNote = function() {
   if(document.getElementById('selected-note')){
     let currentNote = document.getElementById('selected-note')
     currentNote.removeAttribute('id')
+    let popup = document.getElementById('notification-popup')
+    let popupText = document.getElementById('notification-text')
     let noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
     let archived = currentNote.classList.contains('archived-note')
     let archNote = new XMLHttpRequest
     archNote.open('POST', `api/v1/notes/archive/${noteId}`)
     archNote.send(JSON.stringify({"archived": `${archived}`}))
     archNote.onload = function () {
-      currentNote.classList.toggle('active-note')
-      currentNote.classList.toggle('archived-note')
+      if(currentNote.classList.contains('active-note')) {
+        currentNote.classList.remove('active-note')
+        currentNote.classList.add('archived-note')
+        popupText.innerHTML = 'Note Archived!'
+        popup.classList.add('popping-up')
+      } else {
+        currentNote.classList.add('active-note')
+        currentNote.classList.remove('archived-note')
+        popupText.innerHTML = 'Note Unarchived!'
+        popup.classList.add('popping-up')
+      }
       currentNote.style.display = 'none'
       document.getElementsByClassName('current-note-title')[0].value = ""
       document.getElementsByClassName('current-note-body')[0].value = ""
@@ -200,6 +211,8 @@ let deleteNote = function() {
   if(document.getElementById('selected-note')){
     let currentNote = document.getElementById('selected-note')
     let noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
+    let popup = document.getElementById('notification-popup')
+    let popupText = document.getElementById('notification-text')
     for(let j = 0; j < noteData.length; j++) {
       if (noteData[j].id == noteId) {
         noteData.splice(j, 1)
@@ -209,6 +222,8 @@ let deleteNote = function() {
     delNote.open('DELETE', `api/v1/notes/${noteId}`)
     delNote.send()
     delNote.onload= function () {
+      popupText.innerHTML = 'Note Deleted!'
+      popup.classList.add('popping-up')
       currentNote.style.animation = 'growOut 140ms'
       currentNote.style["-webkit-animation"] = 'growOut 140ms'
       currentNote.style["-moz-animation"] = 'growOut 140ms'
