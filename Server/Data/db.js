@@ -1,39 +1,38 @@
-let config = require('../../knexfile').development
-let knex = require('knex')(config)
+module.exports = function (env, table) {
+  let config = require('../../knexfile')[env]
+  let knex = require('knex')(config)
 
-let getNotes = () => knex.select('id', 'content', 'display_order', 'title', 'archived').from('notes').orderBy('display_order', 'desc')
+  return {
+     getNotes: () => knex.select('id', 'content', 'display_order', 'title', 'archived')
+                        .from(table)
+                        .orderBy('display_order', 'desc'),
 
-let getNote = (id) => knex('notes')
-                      .where('id', id)
-                      .select('id', 'content', 'display_order', 'title', 'archived')
-                      .catch((err) => {console.log(err)})
+     getNote: (id) => knex(table)
+                          .where('id', id)
+                          .select('id', 'content', 'display_order', 'title', 'archived')
+                          .catch((err) => {console.log(err)}),
 
-let addNote = () => knex('notes').insert({content: ""}).returning('id')
+     addNote: () => knex(table)
+                      .insert({content: ""})
+                      .returning('id'),
 
-let getCount = () => knex('notes').count('id')
+     getCount: () => knex(table)
+                    .count('id'),
 
-let editNote = (id, content, title) => knex('notes')
-                            .where('id', id)
-                            .update({
-                              content,
-                              title
-                            })
-                            .catch((err) => {console.log(err)})
-
-let deleteNote = (id) => knex('notes')
-                      .where('id', id)
-                      .del()
-
-let archiveToggleNote = (id, archived) => knex('notes')
+     editNote: (id, content, title) => knex(table)
                                 .where('id', id)
-                                .update('archived', !archived)
+                                .update({
+                                  content,
+                                  title
+                                })
+                                .catch((err) => {console.log(err)}),
 
-module.exports = {
-  archiveToggleNote,
-  getNotes,
-  getNote,
-  addNote,
-  getCount,
-  editNote,
-  deleteNote
+     deleteNote: (id) => knex(table)
+                          .where('id', id)
+                          .del(),
+
+     archiveToggleNote: (id, archived) => knex(table)
+                                    .where('id', id)
+                                    .update('archived', !archived)
+  }
 }

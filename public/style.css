@@ -60,18 +60,6 @@ aside {
   100% {transform:scale(0)}
 }
 
-@keyframes growIn {
-  0% {transform:scale(0)}
-  70% {transform:scale(1)}
-  85% {transform: translateY(-4px);}
-  100% {transform: translateY(4px);}
-}
-
-@keyframes growOut {
-  0% {transform:scale(1)}
-  100% {transform:scale(0)}
-}
-
 #tools {
   position: absolute;
   top: 10%;

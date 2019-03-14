@@ -1,4 +1,9 @@
+require('jsdom-global')()
 const assert = require('assert')
-const db = require('../server/data/db')
+const db = require('../server/data/db')('test', 'testnotes')
 
-console.log(db);
+describe('Database tests', function() {
+    it('can retrieve notes from the table', function(done){
+      db.getNotes().then(done())
+    })
+})

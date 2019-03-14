@@ -1,6 +1,5 @@
 var path = require('path')
 var express = require('express')
-var db = require('./data/db')
 var bodyParser = require('body-parser')
 
 var notes = require('./routes/notes')
