@@ -1,16 +1,20 @@
 let noteData = [];
+const newButton = document.getElementById('new-button')
+const deleteButton = document.getElementById('delete-button')
+const archiveButton = document.getElementById('archive-button')
+const editButton = document.getElementById('submit-note-changes-button')
+const viewActiveButton = document.getElementById('view-active-button')
+const viewArchiveButton = document.getElementById('view-archive-button')
+const popup = document.getElementById('notification-popup')
+const popupText = document.getElementById('notification-text')
+const noteList = document.getElementById('note-list')
+const searchBar = document.getElementById('search-bar')
+const titleField = document.querySelector('.current-note-title')
+const bodyField = document.querySelector('.current-note-body')
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function initApp() {
   let data = [];
-  let newButton = document.getElementById('new-button')
-  let deleteButton = document.getElementById('delete-button')
-  let archiveButton = document.getElementById('archive-button')
-  let viewActiveButton = document.getElementById('view-active-button')
-  let viewArchiveButton = document.getElementById('view-archive-button')
-  let popup = document.getElementById('notification-popup')
-  editButton = document.getElementById('submit-note-changes-button')
-  titleField = document.getElementsByClassName('current-note-title')[0]
-  newButton.addEventListener('click', addNewNote)
+  newButton.addEventListener('click', addNote)
   editButton.addEventListener('click', editNote)
   deleteButton.addEventListener('click', deleteNote)
   archiveButton.addEventListener('click', archiveToggleNote)
@@ -34,7 +38,6 @@ window.addEventListener('load', function() {
   getNotes.onload = function() {
     data = JSON.parse(this.response);
     let currentNote;
-    let noteList = document.getElementById('note-list')
     for(let i = 0; i < data.length; i++) {
       currentNote = noteList.appendChild(document.createElement("div"))
       if (data[i].archived) {
@@ -44,23 +47,19 @@ window.addEventListener('load', function() {
       }
       currentNote.classList.add(`note-id-${data[i].id}`)
       currentNote.addEventListener('click', clickNote)
-      let title = currentNote.appendChild(document.createElement("h2"))
-      title.classList.add('note-title')
-      title.innerHTML = data[i].title
-      let content = currentNote.appendChild(document.createElement("p"))
-      content.classList.add('note-content')
-      content.innerHTML = data[i].content
+      let title = currentNote.appendChild(document.createElement("h2", { 'class': 'note-title'}))
+      title.textContent = data[i].title
+      let content = currentNote.appendChild(document.createElement("p", { 'class': 'note-content'}))
+      content.textContent = data[i].content
     }
-    let searchBar = document.getElementById('search-bar')
     let notes = document.getElementsByClassName('note')
-    noteData = Array.from(notes)
-                    .map((note) => {
+    noteData = Array.from(notes, ((note) => {
                     return {
-                      title: note.childNodes[0].innerHTML,
-                      content: note.childNodes[1].innerHTML,
+                      title: note.childNodes[0].textContent,
+                      content: note.childNodes[1].textContent,
                       id: note.className.match(/note-id-(\d+)/i)[1]
                     }
-                    })
+                  }))
     searchBar.addEventListener('keyup', function(e){
       let searchTerm = new RegExp(searchBar.value, "i")
       let filteredNoteIds = noteData.filter((note) => {
@@ -78,94 +77,84 @@ window.addEventListener('load', function() {
   getNotes.send();
 })
 
-let archiveDisplay = function () {
-  let viewArchiveButton = document.getElementById('view-archive-button')
-  let archiveButton = document.getElementById('archive-button')
-  let searchBar = document.getElementById('search-bar')
+const archiveDisplay = function showArchivedNotes() {
+  const searchBar = document.getElementById('search-bar')
   searchBar.setAttribute('placeholder', 'search archive')
   searchBar.value = ''
-  archiveButton.innerHTML = 'Unarchive<i class="fa fa-archive"></i>'
-  let activeNotes = document.getElementsByClassName('active-note')
+  document.getElementById('archive-button').innerHTML = 'Unarchive<i class="fa fa-archive"></i>'
+  const activeNotes = document.getElementsByClassName('active-note')
   for(let i = 0; i < activeNotes.length; i++) {
     activeNotes[i].style.display = 'none';
   }
-  let archivedNotes = document.getElementsByClassName('archived-note')
+  const archivedNotes = document.getElementsByClassName('archived-note')
   for(let j = 0; j < archivedNotes.length; j++) {
     archivedNotes[j].style.display = 'block';
   }
 }
 
-let activeDisplay = function () {
-  let viewActiveButton = document.getElementById('view-active-button')
-  let archiveButton = document.getElementById('archive-button')
-  let searchBar = document.getElementById('search-bar')
+const activeDisplay = function showActiveNotes() {
+  const searchBar = document.getElementById('search-bar')
   searchBar.setAttribute('placeholder', 'search notes')
   searchBar.value = ''
-  archiveButton.innerHTML = 'Archive</br><i class="fa fa-archive"></i>'
-  let activeNotes = document.getElementsByClassName('active-note')
+  document.getElementById('archive-button').innerHTML = 'Archive</br><i class="fa fa-archive"></i>'
+  const activeNotes = document.getElementsByClassName('active-note')
   for(let i = 0; i < activeNotes.length; i++) {
     activeNotes[i].style.display = 'block';
   }
-  let archivedNotes = document.getElementsByClassName('archived-note')
+  const archivedNotes = document.getElementsByClassName('archived-note')
   for(let j = 0; j < archivedNotes.length; j++) {
     archivedNotes[j].style.display = 'none';
   }
 }
 
-let addNewNote = function() {
+const addNote = function createNewActiveNote() {
   activeDisplay()
-  var createNote = new XMLHttpRequest()
+  const createNote = new XMLHttpRequest()
   createNote.open('POST', '/api/v1/notes')
-  let noteList = document.getElementById('note-list')
+  const noteList = document.getElementById('note-list')
   createNote.onload = function() {
-    let id = (JSON.parse(this.response))[0]
+    const id = (JSON.parse(this.response))[0]
     initNote(id)
-    clearSearchFilter()
+    clearSearch()
   }
   createNote.send()
   noteList.scrollTop = 0;
 }
 
-let clearSearchFilter = function() {
-  let searchBar = document.getElementById('search-bar')
-  let notes = document.getElementsByClassName('active-note')
+const clearSearch = function clearSearchFilter() {
+  const notes = document.getElementsByClassName('active-note')
   searchBar.value = ""
   for (let i = 0; i < notes.length; i++) {
     notes[i].classList.remove('filtered')
   }
 }
 
-let initNote = function(id) {
-  let noteList = document.getElementById('note-list')
-  let currentNote = noteList.insertBefore(document.createElement("div"), noteList.childNodes[0])
+const initNote = function insertAndSetupNoteHTML(id) {
+  const currentNote = noteList.insertBefore(document.createElement("div"), noteList.childNodes[0])
   currentNote.classList.add('note', 'active-note')
   currentNote.classList.add(`note-id-${id}`)
   selectNote(currentNote)
-  document.getElementsByClassName('current-note-title')[0].value = ""
-  document.getElementsByClassName('current-note-title')[0].focus()
-  document.getElementsByClassName('current-note-body')[0].value = ""
-  let title = currentNote.appendChild(document.createElement("h2"))
-  title.classList.add('note-title')
-  let content = currentNote.appendChild(document.createElement("p"))
-  content.classList.add('note-content')
+  titleField.value = ""
+  titleField.focus()
+  bodyField.value = ""
+  const title = currentNote.appendChild(document.createElement("h2", { 'class': 'note-title'}))
+  const content = currentNote.appendChild(document.createElement("p", { 'class': 'note-content'}))
   currentNote.addEventListener('click', clickNote)
   noteData = [{content: "", id: id}, ...noteData]
 }
 
-let editNote = function() {
+const editNote = function changeNoteContentAndTitle() {
   if (document.getElementById('selected-note')) {
-    let currentNote = document.getElementById('selected-note')
-    let noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
-    let editNote = new XMLHttpRequest
-    let titleField = document.getElementsByClassName('current-note-title')[0]
-    let bodyField = document.getElementsByClassName('current-note-body')[0]
-    let newContent = bodyField.value
-    let newTitle = titleField.value
+    const currentNote = document.getElementById('selected-note')
+    const noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
+    const editNote = new XMLHttpRequest
+    const newContent = bodyField.value
+    const newTitle = titleField.value
     editNote.open('POST', `/api/v1/notes/${noteId}`)
     editNote.setRequestHeader("Content-Type", "application/json");
     editNote.onload = function() {
-      currentNote.childNodes[0].innerHTML = newTitle
-      currentNote.childNodes[1].innerHTML = newContent
+      currentNote.childNodes[0].textContent = newTitle
+      currentNote.childNodes[1].textContent = newContent
       for(let i = 0; i < noteData.length; i++) {
         if (noteData[i].id == noteId) {
           noteData[i].content = newContent;
@@ -177,52 +166,45 @@ let editNote = function() {
   }
 }
 
-let archiveToggleNote = function() {
+const archiveToggleNote = function archiveOrUnarchiveNote() {
   if(document.getElementById('selected-note')){
-    let currentNote = document.getElementById('selected-note')
+    const currentNote = document.getElementById('selected-note')
     currentNote.removeAttribute('id')
-    let popup = document.getElementById('notification-popup')
-    let popupText = document.getElementById('notification-text')
-    let noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
-    let archived = currentNote.classList.contains('archived-note')
-    let archNote = new XMLHttpRequest
+    const noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
+    const archived = currentNote.classList.contains('archived-note')
+    const archNote = new XMLHttpRequest
     archNote.open('POST', `api/v1/notes/archive/${noteId}`)
     archNote.send(JSON.stringify({"archived": `${archived}`}))
     archNote.onload = function () {
       if(currentNote.classList.contains('active-note')) {
-        currentNote.classList.remove('active-note')
-        currentNote.classList.add('archived-note')
-        popupText.innerHTML = 'Note Archived!'
-        popup.classList.add('popping-up')
+        popupText.textContent = 'Note Archived!'
       } else {
-        currentNote.classList.add('active-note')
-        currentNote.classList.remove('archived-note')
-        popupText.innerHTML = 'Note Unarchived!'
-        popup.classList.add('popping-up')
+        popupText.textContent = 'Note Unarchived!'
       }
+      currentNote.classList.toggle('active-note')
+      currentNote.classList.toggle('archived-note')
+      popup.classList.add('popping-up')
       currentNote.style.display = 'none'
-      document.getElementsByClassName('current-note-title')[0].value = ""
-      document.getElementsByClassName('current-note-body')[0].value = ""
+      document.querySelector('.current-note-title').value = ""
+      document.querySelector('.current-note-body').value = ""
     }
   }
 }
 
-let deleteNote = function() {
+const deleteNote = function removeNoteData() {
   if(document.getElementById('selected-note')){
-    let currentNote = document.getElementById('selected-note')
-    let noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
-    let popup = document.getElementById('notification-popup')
-    let popupText = document.getElementById('notification-text')
+    const currentNote = document.getElementById('selected-note')
+    const noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
     for(let j = 0; j < noteData.length; j++) {
       if (noteData[j].id == noteId) {
         noteData.splice(j, 1)
       }
     }
-    let delNote = new XMLHttpRequest
+    const delNote = new XMLHttpRequest
     delNote.open('DELETE', `api/v1/notes/${noteId}`)
     delNote.send()
     delNote.onload= function () {
-      popupText.innerHTML = 'Note Deleted!'
+      popupText.textContent = 'Note Deleted!'
       popup.classList.add('popping-up')
       currentNote.style.animation = 'growOut 140ms'
       currentNote.style["-webkit-animation"] = 'growOut 140ms'
@@ -233,32 +215,30 @@ let deleteNote = function() {
   }
 }
 
-let cleanUpNote = function() {
+const cleanUpNote = function removeNoteHTML() {
   this.parentElement.removeChild(this)
-  document.getElementsByClassName('current-note-title')[0].value = ""
-  document.getElementsByClassName('current-note-body')[0].value = ""
+  document.querySelector('.current-note-title').value = ""
+  document.querySelector('.current-note-body').value = ""
 }
 
-let clickNote = function() {
+const clickNote = function noteClickHandler() {
   selectNote(this)
   getNoteInfo(this)
 }
 
-let selectNote = function (note) {
+const selectNote = function clearSelectionThenSelectNote(note) {
   if (document.getElementById('selected-note')) {
     document.getElementById('selected-note').removeAttribute('id')
   }
   note.setAttribute('id', 'selected-note')
 }
 
-let getNoteInfo = function(note) {
-  let getNote = new XMLHttpRequest();
-  let noteId = note.className.match(/note-id-(\d+)/i)[1]
+const getNoteInfo = function populateFormWithNoteData(note) {
+  const getNote = new XMLHttpRequest();
+  const noteId = note.className.match(/note-id-(\d+)/i)[1]
   getNote.open('GET', `/api/v1/notes/${noteId}`, true)
   getNote.onload = function() {
-    let data = JSON.parse(this.response)
-    let titleField = document.getElementsByClassName('current-note-title')[0]
-    let bodyField = document.getElementsByClassName('current-note-body')[0]
+    const data = JSON.parse(this.response)
     bodyField.value = data[0].content;
     titleField.value = data[0].title;
   }
