@@ -172,7 +172,6 @@ const archiveToggleNote = function archiveOrUnarchiveNote() {
     currentNote.removeAttribute('id')
     const noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
     const newArchived = !currentNote.matches('.archived-note')
-    console.log(newArchived);
     const archNote = new XMLHttpRequest
     archNote.open('POST', `api/v1/notes/archive/${noteId}`)
     archNote.send(JSON.stringify({"archived": `${newArchived}`}))
