@@ -206,6 +206,7 @@ const deleteNote = function removeNoteData() {
     delNote.onload= function () {
       popupText.textContent = 'Note Deleted!'
       popup.classList.add('popping-up')
+      currentNote.removeEventListener('click', clickNote)
       currentNote.style.animation = 'growOut 140ms'
       currentNote.style["-webkit-animation"] = 'growOut 140ms'
       currentNote.style["-moz-animation"] = 'growOut 140ms'

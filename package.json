@@ -4,7 +4,7 @@
   "description": "simple note taking app made with node and express",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "knex seed:run --env test && mocha --exit",
     "start": "node ./server/server.js",
     "devstart": "nodemon ./server/server.js"
   },

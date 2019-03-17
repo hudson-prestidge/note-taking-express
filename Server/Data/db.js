@@ -3,13 +3,13 @@ module.exports = function (env, table) {
   let knex = require('knex')(config)
 
   return {
-     getNotes: () => knex.select('id', 'content', 'display_order', 'title', 'archived')
+     getNotes: () => knex.select('id', 'content', 'title', 'archived', 'time_posted')
                         .from(table)
-                        .orderBy('display_order', 'desc'),
+                        .orderBy('id', 'desc'),
 
      getNote: (id) => knex(table)
                           .where('id', id)
-                          .select('id', 'content', 'display_order', 'title', 'archived')
+                          .select('id', 'content', 'title', 'archived', 'time_posted')
                           .catch((err) => {console.log(err)}),
 
      addNote: () => knex(table)

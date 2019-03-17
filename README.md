@@ -8,7 +8,6 @@ Current database schema is:
   id SERIAL PRIMARY KEY,
   content TEXT,
   time_posted DATETIME,
-  display_order SERIAL UNIQUE,
   title TEXT,
   archived BOOLEAN
 }
