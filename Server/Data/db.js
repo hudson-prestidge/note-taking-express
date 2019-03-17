@@ -16,14 +16,11 @@ module.exports = function (env, table) {
                       .insert({content: ""})
                       .returning('id'),
 
-     getCount: () => knex(table)
-                    .count('id'),
-
-     editNote: (id, content, title) => knex(table)
+     editNote: (id, title, content) => knex(table)
                                 .where('id', id)
                                 .update({
+                                  title,
                                   content,
-                                  title
                                 })
                                 .catch((err) => {console.log(err)}),
 

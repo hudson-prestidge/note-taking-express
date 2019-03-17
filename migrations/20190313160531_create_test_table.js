@@ -7,7 +7,6 @@ exports.up = function(knex, Promise) {
         t.string('content')
         t.dateTime('time_posted')
         t.string('title')
-        t.integer('display_order')
         t.boolean('archived')
       })
     }
