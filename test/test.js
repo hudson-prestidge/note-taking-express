@@ -4,6 +4,8 @@ const db = require('../server/data/db')('test', 'testnotes')
 
 describe('Database tests', function() {
     it('can retrieve notes from the table', function(done){
-      db.getNotes().then(done())
+      db.getNotes().then(data => {
+        done();
+      })
     })
 })

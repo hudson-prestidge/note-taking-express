@@ -1,14 +1,14 @@
 let noteData = [];
-const newButton = document.getElementById('new-button')
-const deleteButton = document.getElementById('delete-button')
-const archiveButton = document.getElementById('archive-button')
-const editButton = document.getElementById('submit-note-changes-button')
-const viewActiveButton = document.getElementById('view-active-button')
-const viewArchiveButton = document.getElementById('view-archive-button')
-const popup = document.getElementById('notification-popup')
-const popupText = document.getElementById('notification-text')
-const noteList = document.getElementById('note-list')
-const searchBar = document.getElementById('search-bar')
+const newButton = document.querySelector('#new-button')
+const deleteButton = document.querySelector('#delete-button')
+const archiveButton = document.querySelector('#archive-button')
+const editButton = document.querySelector('#submit-note-changes-button')
+const viewActiveButton = document.querySelector('#view-active-button')
+const viewArchiveButton = document.querySelector('#view-archive-button')
+const popup = document.querySelector('#notification-popup')
+const popupText = document.querySelector('#notification-text')
+const noteList = document.querySelector('#note-list')
+const searchBar = document.querySelector('#search-bar')
 const titleField = document.querySelector('.current-note-title')
 const bodyField = document.querySelector('.current-note-body')
 
@@ -21,12 +21,12 @@ window.addEventListener('load', function initApp() {
   viewArchiveButton.addEventListener('click', archiveDisplay)
   viewActiveButton.addEventListener('click', activeDisplay)
   titleField.addEventListener('keyup', function(e) {
-    if(e.keyCode == 13) {
-        document.getElementsByClassName('current-note-body')[0].focus()
+    if(e.keyCode === 13) {
+        document.querySelector('.current-note-body').focus()
       }
     })
   window.addEventListener('keyup', function(e){
-    if(e.keyCode == 46) {
+    if(e.keyCode === 46) {
       deleteNote()
     }
   })
@@ -57,7 +57,7 @@ window.addEventListener('load', function initApp() {
                     return {
                       title: note.childNodes[0].textContent,
                       content: note.childNodes[1].textContent,
-                      id: note.className.match(/note-id-(\d+)/i)[1]
+                      id: note.className.match(/note-id-(\d+)/i)[1],
                     }
                   }))
     searchBar.addEventListener('keyup', function(e){
@@ -78,26 +78,26 @@ window.addEventListener('load', function initApp() {
 })
 
 const archiveDisplay = function showArchivedNotes() {
-  const searchBar = document.getElementById('search-bar')
+  const searchBar = document.querySelector('#search-bar')
   searchBar.setAttribute('placeholder', 'search archive')
   searchBar.value = ''
-  document.getElementById('archive-button').innerHTML = 'Unarchive<i class="fa fa-archive"></i>'
-  const activeNotes = document.getElementsByClassName('active-note')
+  document.querySelector('#archive-button').innerHTML = 'Unarchive<i class="fa fa-archive"></i>'
+  const activeNotes = document.querySelectorAll('.active-note')
   for(let i = 0; i < activeNotes.length; i++) {
     activeNotes[i].style.display = 'none';
   }
-  const archivedNotes = document.getElementsByClassName('archived-note')
+  const archivedNotes = document.querySelectorAll('.archived-note')
   for(let j = 0; j < archivedNotes.length; j++) {
     archivedNotes[j].style.display = 'block';
   }
 }
 
 const activeDisplay = function showActiveNotes() {
-  const searchBar = document.getElementById('search-bar')
+  const searchBar = document.querySelector('#search-bar')
   searchBar.setAttribute('placeholder', 'search notes')
   searchBar.value = ''
-  document.getElementById('archive-button').innerHTML = 'Archive</br><i class="fa fa-archive"></i>'
-  const activeNotes = document.getElementsByClassName('active-note')
+  document.querySelector('#archive-button').innerHTML = 'Archive</br><i class="fa fa-archive"></i>'
+  const activeNotes = document.querySelectorAll('.active-note')
   for(let i = 0; i < activeNotes.length; i++) {
     activeNotes[i].style.display = 'block';
   }
@@ -111,7 +111,7 @@ const addNote = function createNewActiveNote() {
   activeDisplay()
   const createNote = new XMLHttpRequest()
   createNote.open('POST', '/api/v1/notes')
-  const noteList = document.getElementById('note-list')
+  const noteList = document.querySelector('#note-list')
   createNote.onload = function() {
     const id = (JSON.parse(this.response))[0]
     initNote(id)
@@ -122,7 +122,7 @@ const addNote = function createNewActiveNote() {
 }
 
 const clearSearch = function clearSearchFilter() {
-  const notes = document.getElementsByClassName('active-note')
+  const notes = document.querySelectorAll('.active-note')
   searchBar.value = ""
   for (let i = 0; i < notes.length; i++) {
     notes[i].classList.remove('filtered')
@@ -144,8 +144,8 @@ const initNote = function insertAndSetupNoteHTML(id) {
 }
 
 const editNote = function changeNoteContentAndTitle() {
-  if (document.getElementById('selected-note')) {
-    const currentNote = document.getElementById('selected-note')
+  if (document.querySelector('#selected-note')) {
+    const currentNote = document.querySelector('#selected-note')
     const noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
     const editNote = new XMLHttpRequest
     const newContent = bodyField.value
@@ -156,7 +156,7 @@ const editNote = function changeNoteContentAndTitle() {
       currentNote.childNodes[0].textContent = newTitle
       currentNote.childNodes[1].textContent = newContent
       for(let i = 0; i < noteData.length; i++) {
-        if (noteData[i].id == noteId) {
+        if (noteData[i].id === noteId) {
           noteData[i].content = newContent;
           noteData[i].title = newTitle;
         }
@@ -167,16 +167,16 @@ const editNote = function changeNoteContentAndTitle() {
 }
 
 const archiveToggleNote = function archiveOrUnarchiveNote() {
-  if(document.getElementById('selected-note')){
-    const currentNote = document.getElementById('selected-note')
+  if(document.querySelector('#selected-note')){
+    const currentNote = document.querySelector('#selected-note')
     currentNote.removeAttribute('id')
     const noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
-    const archived = currentNote.classList.contains('archived-note')
+    const archived = currentNote.matches('.archived-note')
     const archNote = new XMLHttpRequest
     archNote.open('POST', `api/v1/notes/archive/${noteId}`)
     archNote.send(JSON.stringify({"archived": `${archived}`}))
     archNote.onload = function () {
-      if(currentNote.classList.contains('active-note')) {
+      if(currentNote.matches('.active-note')) {
         popupText.textContent = 'Note Archived!'
       } else {
         popupText.textContent = 'Note Unarchived!'
@@ -192,11 +192,11 @@ const archiveToggleNote = function archiveOrUnarchiveNote() {
 }
 
 const deleteNote = function removeNoteData() {
-  if(document.getElementById('selected-note')){
-    const currentNote = document.getElementById('selected-note')
+  if(document.querySelector('#selected-note')){
+    const currentNote = document.querySelector('#selected-note')
     const noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
     for(let j = 0; j < noteData.length; j++) {
-      if (noteData[j].id == noteId) {
+      if (noteData[j].id === noteId) {
         noteData.splice(j, 1)
       }
     }
@@ -227,8 +227,8 @@ const clickNote = function noteClickHandler() {
 }
 
 const selectNote = function clearSelectionThenSelectNote(note) {
-  if (document.getElementById('selected-note')) {
-    document.getElementById('selected-note').removeAttribute('id')
+  if (document.querySelector('#selected-note')) {
+    document.querySelector('#selected-note').removeAttribute('id')
   }
   note.setAttribute('id', 'selected-note')
 }
