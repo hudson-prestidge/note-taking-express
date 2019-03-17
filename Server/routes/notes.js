@@ -27,7 +27,7 @@ router.post('/:id',(req, res) => {
 })
 
 router.post('/archive/:id',(req, res) => {
-  db.archiveToggleNote(req.params.id, req.body.archived)
+  db.setNoteArchived(req.params.id, req.body.archived)
     .then(data => res.sendStatus(200))
     .catch(err => console.log(err))
 })

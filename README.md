@@ -1,5 +1,6 @@
 # note-taking-express
-simple note taking app made with node and express
+Simple note taking app made with node and express. I've tried to use very few external libraries for this one.
+Attempting to follow the Airbnb style guide (https://github.com/airbnb/javascript) where possible
 
 Current database schema is:
 
@@ -11,11 +12,6 @@ Current database schema is:
   title TEXT,
   archived BOOLEAN
 }
-
-
-planning to add:
-
-time_last_modified DATETIME
 
 Color palette currently used:
 

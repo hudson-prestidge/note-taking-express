@@ -28,8 +28,9 @@ module.exports = function (env, table) {
                           .where('id', id)
                           .del(),
 
-     archiveToggleNote: (id, archived) => knex(table)
+     setNoteArchived: (id, archived) => knex(table)
                                     .where('id', id)
-                                    .update('archived', !archived)
+                                    .update({'archived': archived, 'id': id})
+                                    .catch((err) => {console.log(err)}),
   }
 }
