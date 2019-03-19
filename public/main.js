@@ -42,6 +42,7 @@ window.addEventListener('load', function initApp() {
   let getNotes = new XMLHttpRequest();
   getNotes.open('GET', '/api/v1/notes', true)
   getNotes.onload = function() {
+    disableFields()
     data = JSON.parse(this.response);
     let currentNote;
     for(let i = 0; i < data.length; i++) {
@@ -80,6 +81,18 @@ window.addEventListener('load', function initApp() {
   }
   getNotes.send();
 })
+
+const disableFields = function () {
+  bodyField.setAttribute('disabled', true)
+  titleField.setAttribute('disabled', true)
+  editButton.setAttribute('disabled', true)
+}
+
+const enableFields = function () {
+  bodyField.removeAttribute('disabled')
+  titleField.removeAttribute('disabled')
+  editButton.removeAttribute('disabled')
+}
 
 const archiveDisplay = function showArchivedNotes() {
   viewingArchive = true
@@ -171,6 +184,7 @@ const editNote = function changeNoteContentAndTitle() {
       }
     }
     editNote.send(JSON.stringify({"newContent": `${newContent}`,"newTitle": `${newTitle}`}))
+  } else {
   }
 }
 
@@ -241,6 +255,7 @@ const clickNote = function noteClickHandler() {
 
 const selectNote = function clearSelectionThenSelectNote(note) {
   deselect()
+  enableFields()
   note.setAttribute('id', 'selected-note')
 }
 
@@ -248,6 +263,7 @@ const deselect = function clearSelection () {
   titleField.value = ""
   bodyField.value = ""
   timeField.textContent = ""
+  disableFields()
   if (document.querySelector('#selected-note')) {
     document.querySelector('#selected-note').removeAttribute('id')
   }
