@@ -31,6 +31,10 @@ window.addEventListener('load', function initApp() {
     if(e.keyCode === 46) {
       deleteNote()
     }
+    if(e.keyCode === 32 && document.activeElement.matches('.note')) {
+      selectNote(document.activeElement)
+      getNoteInfo(document.activeElement)
+    }
   })
   popup.addEventListener('animationend', (e) => {
     popup.classList.remove('popping-up')
@@ -49,6 +53,7 @@ window.addEventListener('load', function initApp() {
       }
       currentNote.classList.add(`note-id-${data[i].id}`)
       currentNote.addEventListener('click', clickNote)
+      currentNote.tabIndex = 0;
       let title = currentNote.appendChild(document.createElement("h2", { 'class': 'note-title'}))
       title.textContent = data[i].title
       let content = currentNote.appendChild(document.createElement("p", { 'class': 'note-content'}))
@@ -135,6 +140,7 @@ const initNote = function insertAndSetupNoteHTML(id) {
   titleField.value = ""
   titleField.focus()
   bodyField.value = ""
+  currentNote.tabIndex = 0;
   const title = currentNote.appendChild(document.createElement("h2", { 'class': 'note-title'}))
   const content = currentNote.appendChild(document.createElement("p", { 'class': 'note-content'}))
   currentNote.addEventListener('click', clickNote)
