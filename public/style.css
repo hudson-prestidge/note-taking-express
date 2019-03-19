@@ -86,27 +86,24 @@ aside {
   flex-direction: column;
   border-right: 1px solid black;
   border-left: 1px solid black;
-  background-color: RGBA(37, 22, 5, 0.8);
+  background-color: rgba(37, 22, 5, 0.8);
 }
 
 .note {
+  display: block;
   transform-origin: center;
   -webkit-animation: growIn 200ms;
   -moz-animation: growIn 200ms;
   animation: growIn 200ms;
   background-color: rgba(168, 183, 171, 0.9);
   padding: 1.5em 1.5em 2.5em 1.5em;
-  border-bottom: 0.1em black solid;
-  border-top: 0.1em black solid;
+  border-bottom: 0.1em grey solid;
+  border-top: 0.1em grey solid;
   border-radius: 5px;
 }
 
 .note:hover {
   background-color: rgba(168, 183, 171, 1);
-}
-
-.active-note {
-  display: block;
 }
 
 .note-content {
@@ -243,10 +240,6 @@ button:hover {
   transform: scale(1.05);
   -ms-transform: scale(1.05);
   -webkit-transform: scale(1.05);
-}
-
-.archived-note {
-  display: none;
 }
 
 .filtered {

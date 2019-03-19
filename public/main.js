@@ -1,4 +1,5 @@
 let noteData = [];
+let viewingArchive = false;
 const newButton = document.querySelector('#new-button')
 const deleteButton = document.querySelector('#delete-button')
 const archiveButton = document.querySelector('#archive-button')
@@ -41,7 +42,7 @@ window.addEventListener('load', function initApp() {
     for(let i = 0; i < data.length; i++) {
       currentNote = noteList.appendChild(document.createElement("div"))
       if (data[i].archived) {
-        currentNote.classList.add('note', 'archived-note')
+        currentNote.classList.add('note', 'archived-note', 'filtered')
       } else {
       currentNote.classList.add('note', 'active-note')
       }
@@ -52,19 +53,14 @@ window.addEventListener('load', function initApp() {
       let content = currentNote.appendChild(document.createElement("p", { 'class': 'note-content'}))
       content.textContent = data[i].content
     }
-    let notes = document.getElementsByClassName('note')
-    noteData = Array.from(notes, ((note) => {
-                    return {
-                      title: note.childNodes[0].textContent,
-                      content: note.childNodes[1].textContent,
-                      id: note.className.match(/note-id-(\d+)/i)[1],
-                    }
-                  }))
+    noteData = [...data]
     searchBar.addEventListener('keyup', function(e){
+      let notes = document.querySelectorAll('.note')
       let searchTerm = new RegExp(searchBar.value, "i")
-      let filteredNoteIds = noteData.filter((note) => {
-        return searchTerm.test(note.content) || searchTerm.test(note.title)
-      }).map(note => note.id)
+      let filteredNoteIds = noteData.filter(note =>
+        searchTerm.test(note.content) || searchTerm.test(note.title)
+      ).filter(note =>  note.archived === viewingArchive)
+      .map(note => note.id)
       for(let j = 0; j < noteData.length; j++) {
         if(filteredNoteIds.includes(noteData[j].id)){
           notes[j].classList.remove('filtered')
@@ -78,32 +74,34 @@ window.addEventListener('load', function initApp() {
 })
 
 const archiveDisplay = function showArchivedNotes() {
+  viewingArchive = true
   const searchBar = document.querySelector('#search-bar')
   searchBar.setAttribute('placeholder', 'search archive')
   searchBar.value = ''
   document.querySelector('#archive-button').innerHTML = 'Unarchive<i class="fa fa-archive"></i>'
   const activeNotes = document.querySelectorAll('.active-note')
   for(let i = 0; i < activeNotes.length; i++) {
-    activeNotes[i].style.display = 'none';
+    activeNotes[i].classList.add('filtered')
   }
   const archivedNotes = document.querySelectorAll('.archived-note')
   for(let j = 0; j < archivedNotes.length; j++) {
-    archivedNotes[j].style.display = 'block';
+    archivedNotes[j].classList.remove('filtered')
   }
 }
 
 const activeDisplay = function showActiveNotes() {
+  viewingArchive = false
   const searchBar = document.querySelector('#search-bar')
   searchBar.setAttribute('placeholder', 'search notes')
   searchBar.value = ''
   document.querySelector('#archive-button').innerHTML = 'Archive</br><i class="fa fa-archive"></i>'
   const activeNotes = document.querySelectorAll('.active-note')
   for(let i = 0; i < activeNotes.length; i++) {
-    activeNotes[i].style.display = 'block';
+    activeNotes[i].classList.remove('filtered')
   }
   const archivedNotes = document.getElementsByClassName('archived-note')
   for(let j = 0; j < archivedNotes.length; j++) {
-    archivedNotes[j].style.display = 'none';
+    archivedNotes [j].classList.add('filtered')
   }
 }
 
