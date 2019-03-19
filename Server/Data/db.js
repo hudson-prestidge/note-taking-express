@@ -13,7 +13,7 @@ module.exports = function (env, table) {
                           .catch((err) => {console.log(err)}),
 
      addNote: () => knex(table)
-                      .insert({content: ""})
+                      .insert({content: "", time_posted: knex.fn.now()})
                       .returning('id'),
 
      editNote: (id, title, content) => knex(table)

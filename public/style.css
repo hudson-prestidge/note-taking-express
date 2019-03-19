@@ -189,18 +189,23 @@ p {
   border-color: yellow;
 }
 
-.current-note-title {
+#current-note-title {
   margin-top: 2%;
   margin-left: 5%;
   width: 90%;
 }
 
-.current-note-body {
+#current-note-body {
   z-index: 1;
   margin-top: 2%;
   margin-left: 5%;
   height: 40%;
   width: 90%;
+}
+
+#current-note-time-posted {
+  position: absolute;
+  right: 0;
 }
 
 #submit-note-changes-button {

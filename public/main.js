@@ -10,8 +10,9 @@ const popup = document.querySelector('#notification-popup')
 const popupText = document.querySelector('#notification-text')
 const noteList = document.querySelector('#note-list')
 const searchBar = document.querySelector('#search-bar')
-const titleField = document.querySelector('.current-note-title')
-const bodyField = document.querySelector('.current-note-body')
+const titleField = document.querySelector('#current-note-title')
+const bodyField = document.querySelector('#current-note-body')
+const timeField = document.querySelector('#current-note-time-posted')
 
 window.addEventListener('load', function initApp() {
   let data = [];
@@ -23,7 +24,7 @@ window.addEventListener('load', function initApp() {
   viewActiveButton.addEventListener('click', activeDisplay)
   titleField.addEventListener('keyup', function(e) {
     if(e.keyCode === 13) {
-        document.querySelector('.current-note-body').focus()
+        bodyField.focus()
       }
     })
   window.addEventListener('keyup', function(e){
@@ -129,8 +130,7 @@ const clearSearch = function clearSearchFilter() {
 
 const initNote = function insertAndSetupNoteHTML(id) {
   const currentNote = noteList.insertBefore(document.createElement("div"), noteList.childNodes[0])
-  currentNote.classList.add('note', 'active-note')
-  currentNote.classList.add(`note-id-${id}`)
+  currentNote.classList.add('note', 'active-note', `note-id-${id}`)
   selectNote(currentNote)
   titleField.value = ""
   titleField.focus()
@@ -172,20 +172,26 @@ const archiveToggleNote = function archiveOrUnarchiveNote() {
     const newArchived = !currentNote.matches('.archived-note')
     const archNote = new XMLHttpRequest
     archNote.open('POST', `api/v1/notes/archive/${noteId}`)
-    archNote.send(JSON.stringify({"archived": `${newArchived}`}))
+    archNote.setRequestHeader("Content-Type", "application/json");
     archNote.onload = function () {
       if(currentNote.matches('.active-note')) {
         popupText.textContent = 'Note Archived!'
       } else {
         popupText.textContent = 'Note Unarchived!'
       }
+      for(let i = 0; i < noteData.length; i++) {
+        if (noteData[i].id == noteId) {
+          noteData[i].archived = newArchived;
+        }
+      }
       currentNote.classList.toggle('active-note')
       currentNote.classList.toggle('archived-note')
+      currentNote.classList.add('filtered')
       popup.classList.add('popping-up')
-      currentNote.style.display = 'none'
-      document.querySelector('.current-note-title').value = ""
-      document.querySelector('.current-note-body').value = ""
+      titleField.value = ""
+      bodyField.value = ""
     }
+    archNote.send(JSON.stringify({"archived": `${newArchived}`}))
   }
 }
 
@@ -194,7 +200,7 @@ const deleteNote = function removeNoteData() {
     const currentNote = document.querySelector('#selected-note')
     const noteId = currentNote.className.match(/note-id-(\d+)/i)[1]
     for(let j = 0; j < noteData.length; j++) {
-      if (noteData[j].id === noteId) {
+      if (noteData[j].id == noteId) {
         noteData.splice(j, 1)
       }
     }
@@ -237,9 +243,10 @@ const getNoteInfo = function populateFormWithNoteData(note) {
   const noteId = note.className.match(/note-id-(\d+)/i)[1]
   getNote.open('GET', `/api/v1/notes/${noteId}`, true)
   getNote.onload = function() {
-    const data = JSON.parse(this.response)
-    bodyField.value = data[0].content;
-    titleField.value = data[0].title;
+    const data = JSON.parse(this.response)[0]
+    bodyField.value = data.content;
+    titleField.value = data.title;
+    timeField.textContent = `Note created at ${new Date(data['time_posted'])}`
   }
   getNote.send();
 }
