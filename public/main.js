@@ -158,8 +158,10 @@ const initNote = function insertAndSetupNoteHTML(id) {
   titleField.focus()
   bodyField.value = ""
   currentNote.tabIndex = 0;
-  const title = currentNote.appendChild(document.createElement("h2", { 'class': 'note-title'}))
-  const content = currentNote.appendChild(document.createElement("p", { 'class': 'note-content'}))
+  const title = currentNote.appendChild(document.createElement("h2"))
+  title.classList.add('note-title')
+  const content = currentNote.appendChild(document.createElement("p"))
+  content.classList.add('note-content')
   currentNote.addEventListener('click', clickNote)
   noteData = [{content: "", id: id, archived: false, title: ""}, ...noteData]
 }
