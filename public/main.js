@@ -44,7 +44,7 @@ window.addEventListener('load', function initApp() {
       if (data[i].archived) {
         currentNote.classList.add('note', 'archived-note', 'filtered')
       } else {
-      currentNote.classList.add('note', 'active-note')
+        currentNote.classList.add('note', 'active-note')
       }
       currentNote.classList.add(`note-id-${data[i].id}`)
       currentNote.addEventListener('click', clickNote)
@@ -64,7 +64,7 @@ window.addEventListener('load', function initApp() {
       for(let j = 0; j < noteData.length; j++) {
         if(filteredNoteIds.includes(noteData[j].id)){
           notes[j].classList.remove('filtered')
-        }else {
+        } else {
           notes[j].classList.add('filtered')
         }
       }
@@ -138,7 +138,7 @@ const initNote = function insertAndSetupNoteHTML(id) {
   const title = currentNote.appendChild(document.createElement("h2", { 'class': 'note-title'}))
   const content = currentNote.appendChild(document.createElement("p", { 'class': 'note-content'}))
   currentNote.addEventListener('click', clickNote)
-  noteData = [{content: "", id: id}, ...noteData]
+  noteData = [{content: "", id: id, archived: false, title: ""}, ...noteData]
 }
 
 const editNote = function changeNoteContentAndTitle() {
@@ -154,7 +154,7 @@ const editNote = function changeNoteContentAndTitle() {
       currentNote.childNodes[0].textContent = newTitle
       currentNote.childNodes[1].textContent = newContent
       for(let i = 0; i < noteData.length; i++) {
-        if (noteData[i].id === noteId) {
+        if (noteData[i].id == noteId) {
           noteData[i].content = newContent;
           noteData[i].title = newTitle;
         }
