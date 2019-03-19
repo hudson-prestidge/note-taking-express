@@ -54,9 +54,11 @@ window.addEventListener('load', function initApp() {
       currentNote.classList.add(`note-id-${data[i].id}`)
       currentNote.addEventListener('click', clickNote)
       currentNote.tabIndex = 0;
-      let title = currentNote.appendChild(document.createElement("h2", { 'class': 'note-title'}))
+      let title = currentNote.appendChild(document.createElement("h2"))
+      title.classList.add('note-title')
       title.textContent = data[i].title
-      let content = currentNote.appendChild(document.createElement("p", { 'class': 'note-content'}))
+      let content = currentNote.appendChild(document.createElement("p"))
+      content.classList.add('note-content')
       content.textContent = data[i].content
     }
     noteData = [...data]
@@ -81,6 +83,7 @@ window.addEventListener('load', function initApp() {
 
 const archiveDisplay = function showArchivedNotes() {
   viewingArchive = true
+  deselect()
   const searchBar = document.querySelector('#search-bar')
   searchBar.setAttribute('placeholder', 'search archive')
   searchBar.value = ''
@@ -97,6 +100,7 @@ const archiveDisplay = function showArchivedNotes() {
 
 const activeDisplay = function showActiveNotes() {
   viewingArchive = false
+  deselect()
   const searchBar = document.querySelector('#search-bar')
   searchBar.setAttribute('placeholder', 'search notes')
   searchBar.value = ''
@@ -194,8 +198,7 @@ const archiveToggleNote = function archiveOrUnarchiveNote() {
       currentNote.classList.toggle('archived-note')
       currentNote.classList.add('filtered')
       popup.classList.add('popping-up')
-      titleField.value = ""
-      bodyField.value = ""
+      deselect()
     }
     archNote.send(JSON.stringify({"archived": `${newArchived}`}))
   }
@@ -228,8 +231,7 @@ const deleteNote = function removeNoteData() {
 
 const cleanUpNote = function removeNoteHTML() {
   this.parentElement.removeChild(this)
-  document.querySelector('.current-note-title').value = ""
-  document.querySelector('.current-note-body').value = ""
+  deselect()
 }
 
 const clickNote = function noteClickHandler() {
@@ -238,10 +240,17 @@ const clickNote = function noteClickHandler() {
 }
 
 const selectNote = function clearSelectionThenSelectNote(note) {
+  deselect()
+  note.setAttribute('id', 'selected-note')
+}
+
+const deselect = function clearSelection () {
+  titleField.value = ""
+  bodyField.value = ""
+  timeField.textContent = ""
   if (document.querySelector('#selected-note')) {
     document.querySelector('#selected-note').removeAttribute('id')
   }
-  note.setAttribute('id', 'selected-note')
 }
 
 const getNoteInfo = function populateFormWithNoteData(note) {

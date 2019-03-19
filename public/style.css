@@ -109,7 +109,7 @@ aside {
 .note-content {
   line-height: 1em;
   height: 1em;
-  overflow-y: hidden;
+  overflow: hidden;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
