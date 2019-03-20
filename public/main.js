@@ -42,7 +42,6 @@ window.addEventListener('load', function initApp() {
   let getNotes = new XMLHttpRequest();
   getNotes.open('GET', '/api/v1/notes', true)
   getNotes.onload = function() {
-    console.log(`getnotes response: ${this.response}`);
     disableFields()
     data = JSON.parse(this.response);
     let currentNote;
