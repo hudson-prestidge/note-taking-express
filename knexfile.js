@@ -1,13 +1,15 @@
 // Update with your config settings.
+let herokuinfo = require('./herokuinfo')
 
 module.exports = {
     development: {
       client: 'pg',
       connection: {
-        host: '127.0.0.1',
-        database: 'postgres',
-        user: 'postgres',
-        password: 'test'
+        host: herokuinfo.host,
+        database: herokuinfo.database,
+        user: herokuinfo.user,
+        password: herokuinfo.password,
+        ssl: true
       },
       pool: {
         min: 2,
