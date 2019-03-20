@@ -12,5 +12,5 @@ app.use('/api/v1/notes', notes)
 app.use(express.static(`${__dirname}/public`))
 app.get('/', (req, res) => res.sendFile(`${__dirname}/../public/index.html`))
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
 console.log('app is running and listening on port 3000')
