@@ -1,7 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 
-var notes = require(`${__dirname}/server/routes/notes`)
+var notes = require(`${__dirname}/Server/routes/notes`)
 
 var app = express()
 

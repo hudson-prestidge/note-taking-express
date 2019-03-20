@@ -1,5 +1,5 @@
 var express = require('express')
-var db = require('../data/db')('development', 'notes')
+var db = require('../Data/db')('development', 'notes')
 var router = express.Router();
 
 router.get('/',(req, res) => {
