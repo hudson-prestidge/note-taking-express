@@ -15,7 +15,7 @@ module.exports = {
         max: 10
       },
       migrations: {
-        tableName: 'notes'
+        tableName: 'migrations'
       }
   },
   test: {
@@ -30,9 +30,6 @@ module.exports = {
     pool: {
       min: 2,
       max: 10
-    },
-    migrations: {
-      tableName: 'testnotes'
     }
   }
 

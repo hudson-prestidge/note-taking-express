@@ -79,6 +79,9 @@ window.addEventListener('load', function initApp() {
       }
     })
   }
+  getNotes.onError = function(err) {
+    console.log(`An error occured while retrieving note data: ${err}`);
+  }
   getNotes.send();
 })
 
